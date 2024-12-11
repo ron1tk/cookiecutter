@@ -47,6 +47,8 @@ def version_msg() -> str:
     return f"Cookiecutter {__version__} from {location} (Python {python_version})"
 
 
+
+
 def validate_extra_context(
     _ctx: Context, _param: Parameter, value: Iterable[str]
 ) -> OrderedDict[str, str] | None:
