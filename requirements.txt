@@ -2,4 +2,3 @@ requests
 pytest
 langflow==1.1
 pytest-cov
-binaryornot
