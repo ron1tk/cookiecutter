@@ -57,7 +57,8 @@ def validate_extra_context(
 
 
 
-                
+
+
                 f"EXTRA_CONTEXT should contain items of the form key=value; "
                 f"'{string}' doesn't match that form"
             )
