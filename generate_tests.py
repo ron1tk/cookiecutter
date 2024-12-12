@@ -434,7 +434,7 @@ Is there anything missing that I need to install to run this test? If yes, pleas
         )
         response.raise_for_status()
         generated_text = response.json()['choices'][0]['message']['content']
-        normalized_text = generated_text.replace('“', '"').replace('”', '"').replace("‘", "'").replace("’", "'")
+        normalized_text = generated_text.replace('"', '"').replace('"', '"').replace("'", "'").replace("'", "'")
         if normalized_text.startswith('```'):
             first_newline_index = normalized_text.find('\n', 3)
             if first_newline_index != -1:
@@ -445,7 +445,11 @@ Is there anything missing that I need to install to run this test? If yes, pleas
                 normalized_text = normalized_text[:-3]
         return normalized_text.strip()
     except RequestException as e:
-        logging.error(f"API request failed: {e}, Response: {response.text}")
+        logging.error(f"API request failed: {e}")
+        return None
+    except (KeyError, IndexError) as e:
+        logging.error(f"Error parsing API response: {e}")
+        return None
      
  def make_test_file(self, file_name: str, language: str) -> Path:
      """Save generated test cases to appropriate directory structure."""
