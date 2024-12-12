@@ -72,6 +72,12 @@ def validate_extra_context(
 
 
 
+
+
+
+
+
+
 def list_installed_templates(
     default_config: bool | dict[str, Any], passed_config_file: str | None
 ) -> None:
