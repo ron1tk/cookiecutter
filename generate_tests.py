@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 from requests.exceptions import RequestException
 from typing import List, Optional, Dict, Any
+import re
+
 
 # Set up logging
 logging.basicConfig(
@@ -16,7 +18,7 @@ logging.basicConfig(
 
 class TestGenerator:
  def __init__(self):
-     self.api_key = os.getenv('OPENAI_API_KEY')
+     self.api_key = os.getenv('OPENAI_API_KEY') #key
      self.model = os.getenv('OPENAI_MODEL', 'o1-mini')
      
      try:
@@ -182,102 +184,107 @@ class TestGenerator:
       limited_test_files = related_test_files[:1]# List
       return limited_test_files  # List
  
- def generate_coverage_beforehand(self, test_file:Path, file_name:str, language: str):
+ def all_test_files_before(self, language: str, file_name: str) -> str:
+     #run coverage run
+     #know if there is an ini file probably won't work
+     #if it generates an error don't pass it in
+     #.....
+     #if the file is 100% coverage probably don't want test cases for it
+    coverageRunResult = ""
+    file_name_path= Path(file_name)
+    report_file = f"{file_name_path.stem}_coverage_report.txt" #make a file temporarily
+    try:
+        if (language=='Python'):
+            #python
+            subprocess.run(["coverage","run","-m","pytest"])
+            #subprocess.run(["coverage","report", "-m"],stdout=coverageRunResult,check=True)
+            subprocess.run(["coverage","report", "-m"],stdout=open(report_file, "a"),check=True)
+            with open(report_file, "r") as file:
+                coverageRunResult = file.read()
+            os.remove(report_file) # deleting it now
 
-       try:
-           self.generate_coverage_report(file_name,test_file,language) #generating the coverage report
-       except subprocess.CalledProcessError as e:
-           logging.error(f"Error generating the before coverage report for {test_file}: {e}")
-       logging.info("made the before test case generation  :" + str(test_file))
+
+
+            # Find the line that starts with "calculator.py"
+            match = re.search(r"^"+file_name_path.stem+"\.py\s+.*", coverageRunResult, re.MULTILINE)
+
+            # Extract the matched line
+            if match:
+                calculator_line = match.group(0)
+                coverageRunResult = calculator_line
+                match = re.search(r"%\s+(.*)", calculator_line)
+                coverageRunResult = match.group(0)
+                print(calculator_line)
+
+            else:
+                print("Line for 'calculator.py' not found.")
+
+                
+        
+    except subprocess.CalledProcessError as e:
+        logging.error(f"Error generating the all test files coverage report for {file_name}: {e}")
+    if (coverageRunResult==""):
+        coverageRunResult = "The coverageReportDidNotHappen"
+    elif ("Error" in coverageRunResult or "error" in coverageRunResult):
+        coverageRunResult = "There was an error somewhere in the result"
+    return coverageRunResult
+    
+
+ def generate_coverage_beforehand(self, test_file:Path, file_name:str, language: str):
+       if (language=="Python"):
+            try:
+                report_file = test_file.parent / f"{test_file.stem}_coverage_report.txt"
+                subprocess.run(["coverage","erase"])
+                subprocess.run(["coverage","run","-m","pytest"])
+                subprocess.run(["coverage","report", "-m"],stdout=open(report_file, "a"),check=True)
+                #self.generate_coverage_report(file_name,test_file,language) #generating the coverage report
+
+            except subprocess.CalledProcessError as e:
+                logging.error(f"Error generating the before coverage report for {test_file}: {e}")
+            logging.info("made the before test case generation  :" + str(test_file))
+            
+        
        
        
  
- def generate_coverage_report(self, file_name: str, test_file: Path, language: str):
-    logging.info("got to generate coverage report function")
-    """Generate a code coverage report, send it to OpenAI for analysis, and save it as a text file."""
-    report_file = test_file.parent / f"{test_file.stem}_coverage_report.txt"
-    
-    # Determine base_name based on language
-    if language == "Python":
-        current_path = str(os.path.dirname(os.path.abspath(__file__))) + "/"
-        base_name = Path(file_name).resolve()
-        base_name = str(base_name).replace(current_path, '').replace('/', '.')
-        base_name = base_name.replace(file_name, "").replace(".py", "")
-        if base_name == "":
-            base_name = "."
-    else:
-        base_name = Path(file_name).stem
+ def generate_coverage_report(self, file_name:str, test_file: Path, language: str):
+       """Generate a code coverage report and save it as a text file."""
+       report_file = test_file.parent / f"{test_file.stem}_coverage_report.txt"
+       if language == "Python":
+          # Get the full path of the base file and replace slashes with dots
+          current_path = str(os.path.dirname(os.path.abspath(__file__)))  + "/"
+          base_name = Path(file_name).resolve()
 
-    # Run tests with coverage based on language
-    try:
-        if language == "Python":
-            coverage_output = subprocess.run(
-                ["pytest", str(test_file), "--cov=" + str(base_name), "--cov-report=term-missing"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                check=True,
-                text=True
-            ).stdout
-            logging.info("initial coverage report was made")
-        elif language == "JavaScript":
-            coverage_output = subprocess.run(
-                ["jest", "--coverage", "--config=path/to/jest.config.js"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                check=True,
-                text=True
-            ).stdout
-        else:
-            raise ValueError("Unsupported language for coverage report")
-    except subprocess.CalledProcessError as e:
-        logging.error(f"Error during test execution: {e.stderr}")
+          base_name = str(base_name).replace(current_path,'').replace('/', '.')
+          
+          base_name = base_name.replace(file_name,"").replace(".py","") #if (base_name) should still have .
+          if (base_name==""):
+              base_name="."
+       else:
+          # For other languages, the base_name remains the stem of the file
+          base_name = Path(file_name).stem
 
-    logging.info(f"Coverage output: {coverage_output[:500]}")  # Log first 500 chars for brevity
+       try:
+           # Run tests with coverage based on language
+           if language == "Python":
+               subprocess.run(
+                   ["pytest", str(test_file), "--cov="+str(base_name), "--cov-report=term-missing"],
+                   stdout=open(report_file, "a"),
+                   check=True
+               )
+           elif language == "JavaScript":
+               # Example for JavaScript - replace with the specific coverage tool and command
+               subprocess.run(
+                   ["jest", "--coverage", "--config=path/to/jest.config.js"],
+                   stdout=open(report_file, "a"),
+                   check=True
+               )
+           # Add additional commands for other languages here
 
-    # Send the coverage report to OpenAI
-    logging.info("about to send report to OpenAI")
-    prompt = f"""Here is the code coverage report:
-{coverage_output}
-Is there anything missing that I need to install to run this test? If yes, please respond with only the exact command to install the missing dependency. If nothing is needed, respond with NA."""
-    
-    try:
-        response = self.call_openai_api(prompt)
-        logging.info("received response from OpenAI")
-    except Exception as e:
-        logging.error(f"Error calling OpenAI API: {e}")
-        response = "NA"
+           logging.info(f"Code coverage report saved to {report_file}")
 
-    # Handle OpenAI response
-    if response == "NA":
-        logging.info("no need to install")
-        with open(report_file, "a") as f:
-            f.write(coverage_output)
-        logging.info(f"Code coverage report saved to {report_file}")
-    elif response:
-        logging.info(f"going to install, this was the response: {response}")
-        subprocess.run(response, shell=True, check=True)
-
-        # Re-run the coverage report after installing dependencies
-        if language == "Python":
-            coverage_output = subprocess.run(
-                ["pytest", str(test_file), "--cov=" + str(base_name), "--cov-report=term-missing"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                check=True,
-                text=True
-            ).stdout
-        elif language == "JavaScript":
-            coverage_output = subprocess.run(
-                ["jest", "--coverage", "--config=path/to/jest.config.js"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                check=True,
-                text=True
-            ).stdout
-
-        with open(report_file, "a") as f:
-            f.write(coverage_output)
-        logging.info(f"Code coverage report saved to {report_file} after installing missing dependencies.")
+       except subprocess.CalledProcessError as e:
+           logging.error(f"Error generating coverage report for {test_file}: {e}")
 
  def ensure_coverage_installed(self, language: str):
        """
@@ -287,8 +294,10 @@ Is there anything missing that I need to install to run this test? If yes, pleas
        try:
            if language.lower() == 'python':
                # Check if 'coverage' is installed for Python
-               
+               subprocess.check_call([sys.executable, '-m','pip','install', 'coverage'])
+               subprocess.check_call([sys.executable, '-m','pip','install', 'coverage','pytest'])#pip install coverage pytest
                subprocess.check_call([sys.executable, '-m','pip','install', 'pytest-cov'])
+               subprocess.check_call([sys.executable, '-m','coverage','erase'])#coverage erase
                logging.info(f"Coverage tool for Python is already installed.")
            elif language.lower() == 'javascript':
                # Check if 'jest' coverage is available for JavaScript
@@ -377,6 +386,15 @@ Is there anything missing that I need to install to run this test? If yes, pleas
           except Exception as e:
               logging.error(f"Error reading related test file {related_test_file}: {e}")
 
+      
+      try:
+        allCoverageReport = self.all_test_files_before(language,file_name)
+      except Exception as e:
+          logging.error(f"Error with doing the allCoverageReport:{e}")
+          allCoverageReport = "Was not able to get the coverage of the file beforehand"
+     
+      logging.info("Processing all test files before :) ")
+
       # Add the file name at the top of the prompt
       framework = self.get_test_framework(language)
       prompt = f"""Generate comprehensive unit tests for the following {language} file: {file_name} using {framework}.
@@ -401,51 +419,102 @@ Is there anything missing that I need to install to run this test? If yes, pleas
       Related test cases:
       {related_test_content}
 
+      Here are the uncovered lines in the file to make test cases for:
+      {allCoverageReport.strip()}
+
       Generate only the test code without any explanations or notes."""
 
       logging.info(f"Created prompt for {file_name} with length {len(prompt)} characters")
       return prompt
 
 
- def call_openai_api(self, prompt: str) -> Optional[str]:
-    """Call OpenAI API to generate test cases."""
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': f'Bearer {self.api_key}'
-    }
-    
-    data = {
-        'model': self.model,
-        'messages': [
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        'max_completion_tokens': self.max_tokens
-    }
+ def call_openai_api_gptseries(self, prompt: str) -> Optional[str]:
+     """Call OpenAI API to generate test cases."""
+     headers = {
+         'Content-Type': 'application/json',
+         'Authorization': f'Bearer {self.api_key}'
+     }
+     
+     data = {
+         'model': self.model,
+         'messages': [
+             {
+                 "role": "system",
+                 "content": "You are a senior software engineer specialized in writing comprehensive test suites."
+             },
+             {
+                 "role": "user",
+                 "content": prompt
+             }
+         ],
+         'max_tokens': self.max_tokens,
+         'temperature': 0.7
+     }
 
-    try:
-        response = requests.post(
-            'https://api.openai.com/v1/chat/completions',
-            headers=headers,
-            json=data,
-            timeout=60
-        )
-        response.raise_for_status()
-        generated_text = response.json()['choices'][0]['message']['content']
-        normalized_text = generated_text.replace('“', '"').replace('”', '"').replace("‘", "'").replace("’", "'")
-        if normalized_text.startswith('```'):
-            first_newline_index = normalized_text.find('\n', 3)
-            if first_newline_index != -1:
-                normalized_text = normalized_text[first_newline_index+1:]
-            else:
-                normalized_text = normalized_text[3:]
-            if normalized_text.endswith('```'):
-                normalized_text = normalized_text[:-3]
-        return normalized_text.strip()
-    except RequestException as e:
-        logging.error(f"API request failed: {e}, Response: {response.text}")
+     try:
+         response = requests.post(
+             'https://api.openai.com/v1/chat/completions',
+             headers=headers,
+             json=data,
+             timeout=60
+         )
+         response.raise_for_status()
+         generated_text = response.json()['choices'][0]['message']['content']
+         normalized_text = generated_text.replace('“', '"').replace('”', '"').replace("‘", "'").replace("’", "'")
+         if normalized_text.startswith('```'):
+             first_newline_index = normalized_text.find('\n', 3)
+             if first_newline_index != -1:
+                 normalized_text = normalized_text[first_newline_index+1:]
+             else:
+                 normalized_text = normalized_text[3:]
+             if normalized_text.endswith('```'):
+                 normalized_text = normalized_text[:-3]
+         return normalized_text.strip()
+     except RequestException as e:
+         logging.error(f"API request failed: {e}, Response: {response.text}")
+         return None
+     
+ 
+ def call_openai_api_mini(self, prompt: str) -> Optional[str]:
+     """Call OpenAI API to generate test cases."""
+     headers = {
+         'Content-Type': 'application/json',
+         'Authorization': f'Bearer {self.api_key}'
+     }
+     
+     data = {
+         'model': self.model,
+         'messages': [
+             {
+                 "role": "user",
+                 "content": prompt
+             }
+         ],
+         'max_completion_tokens': self.max_tokens
+     }
+
+     try:
+         response = requests.post(
+             'https://api.openai.com/v1/chat/completions',
+             headers=headers,
+             json=data,
+             timeout=60
+         )
+         response.raise_for_status()
+         generated_text = response.json()['choices'][0]['message']['content']
+         normalized_text = generated_text.replace('“', '"').replace('”', '"').replace("‘", "'").replace("’", "'")
+         if normalized_text.startswith('```'):
+             first_newline_index = normalized_text.find('\n', 3)
+             if first_newline_index != -1:
+                 normalized_text = normalized_text[first_newline_index+1:]
+             else:
+                 normalized_text = normalized_text[3:]
+             if normalized_text.endswith('```'):
+                 normalized_text = normalized_text[:-3]
+         return normalized_text.strip()
+     except RequestException as e:
+         logging.error(f"API request failed: {e}, Response: {response.text}")
+         return None
      
  def make_test_file(self, file_name: str, language: str) -> Path:
      """Save generated test cases to appropriate directory structure."""
@@ -518,8 +587,9 @@ Is there anything missing that I need to install to run this test? If yes, pleas
               
               if prompt:
                   
-                  test_cases = self.call_openai_api(prompt)
-                  
+                  test_cases = self.call_openai_api_mini(prompt)
+                  logging.info(prompt+ "\n\n\n")
+                  logging.info("this is test_cases result"+ test_cases)
                   if test_cases:
                       test_cases = test_cases.replace("“", '"').replace("”", '"')
 

@@ -46,16 +46,6 @@ def version_msg() -> str:
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     return f"Cookiecutter {__version__} from {location} (Python {python_version})"
 
-
-
-
-
-
-
-
-
-
-
 def validate_extra_context(
     _ctx: Context, _param: Parameter, value: Iterable[str]
 ) -> OrderedDict[str, str] | None:
@@ -63,6 +53,8 @@ def validate_extra_context(
     for string in value:
         if '=' not in string:
             msg = (
+
+                
                 f"EXTRA_CONTEXT should contain items of the form key=value; "
                 f"'{string}' doesn't match that form"
             )
