@@ -1,0 +1,1400 @@
+No data to report.
+============================= test session starts ==============================
+platform linux -- Python 3.10.15, pytest-8.3.4, pluggy-1.5.0 -- /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/cookiecutter/cookiecutter
+configfile: pyproject.toml
+plugins: cov-6.0.0, anyio-4.7.0
+collecting ... collected 33 items
+
+generated_tests/python/test_cli.py::TestVersionMsg::test_version_msg_format PASSED [  3%]
+generated_tests/python/test_cli.py::TestValidateExtraContext::test_valid_extra_context PASSED [  6%]
+generated_tests/python/test_cli.py::TestValidateExtraContext::test_empty_extra_context PASSED [  9%]
+generated_tests/python/test_cli.py::TestValidateExtraContext::test_invalid_extra_context_missing_equal PASSED [ 12%]
+generated_tests/python/test_cli.py::TestListInstalledTemplates::test_list_installed_templates_success FAILED [ 15%]
+generated_tests/python/test_cli.py::TestListInstalledTemplates::test_list_installed_templates_dir_not_exists FAILED [ 18%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_help PASSED [ 21%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_version PASSED [ 24%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_list_installed PASSED [ 27%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_no_arguments FAILED [ 30%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_help_argument PASSED [ 33%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_invalid_extra_context PASSED [ 36%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_success FAILED [ 39%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_cookiecutter_exception FAILED [ 42%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_undefined_variable_in_template FAILED [ 45%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_conflicting_options FAILED [ 48%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_accept_hooks_yes FAILED [ 51%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_accept_hooks_no FAILED [ 54%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_accept_hooks_ask_yes PASSED [ 57%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_accept_hooks_ask_no PASSED [ 60%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_overwrite_if_exists FAILED [ 63%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_skip_if_file_exists FAILED [ 66%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_extra_context FAILED [ 69%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_output_dir FAILED [ 72%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_replay FAILED [ 75%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_config_file FAILED [ 78%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_default_config FAILED [ 81%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_debug_file PASSED [ 84%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_password FAILED [ 87%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_directory FAILED [ 90%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_keep_project_on_failure FAILED [ 93%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_verbose PASSED [ 96%]
+generated_tests/python/test_cli.py::TestMainCommand::test_main_replay_file FAILED [100%]
+
+=================================== FAILURES ===================================
+_______ TestListInstalledTemplates.test_list_installed_templates_success _______
+
+self = <test_cli.TestListInstalledTemplates object at 0x7f27002b9db0>
+mock_exit = <MagicMock name='exit' id='139805481633296'>
+mock_echo = <MagicMock name='echo' id='139805483689552'>
+mock_listdir = <MagicMock name='listdir' id='139805483519712'>
+mock_exists = <MagicMock name='exists' id='139805483526480'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139805481640928'>
+
+    @patch("cookiecutter.cli.get_user_config")
+    @patch("cookiecutter.cli.os.path.exists")
+    @patch("cookiecutter.cli.os.listdir")
+    @patch("cookiecutter.cli.click.echo")
+    @patch("cookiecutter.cli.sys.exit")
+    def test_list_installed_templates_success(
+        self,
+        mock_exit,
+        mock_echo,
+        mock_listdir,
+        mock_exists,
+        mock_get_user_config,
+    ):
+        mock_get_user_config.return_value = {"cookiecutters_dir": "/fake/dir"}
+        mock_exists.side_effect = lambda path: True if path.endswith("cookiecutter.json") else path == "/fake/dir"
+        mock_listdir.return_value = ["template1", "template2", "not_a_template"]
+        list_installed_templates(default_config=True, passed_config_file=None)
+>       mock_echo.assert_any_call("2 installed templates: ")
+
+generated_tests/python/test_cli.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='echo' id='139805483689552'>
+args = ('2 installed templates: ',), kwargs = {}
+expected = call('2 installed templates: '), cause = None
+actual = [call('3 installed templates: '), call(' * template1'), call(' * template2'), call(' * not_a_template')]
+expected_string = "echo('2 installed templates: ')"
+
+    def assert_any_call(self, /, *args, **kwargs):
+        """assert the mock has been called with the specified arguments.
+    
+        The assert passes if the mock has *ever* been called, unlike
+        `assert_called_with` and `assert_called_once_with` that only pass if
+        the call is the most recent one."""
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        cause = expected if isinstance(expected, Exception) else None
+        actual = [self._call_matcher(c) for c in self.call_args_list]
+        if cause or expected not in _AnyComparer(actual):
+            expected_string = self._format_mock_call_signature(args, kwargs)
+>           raise AssertionError(
+                '%s call not found' % expected_string
+            ) from cause
+E           AssertionError: echo('2 installed templates: ') call not found
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1000: AssertionError
+___ TestListInstalledTemplates.test_list_installed_templates_dir_not_exists ____
+
+self = <test_cli.TestListInstalledTemplates object at 0x7f27002b9f00>
+mock_exit = <MagicMock name='exit' id='139805483683024'>
+mock_echo = <MagicMock name='echo' id='139805482033664'>
+mock_exists = <MagicMock name='exists' id='139805482026800'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139805481888464'>
+
+    @patch("cookiecutter.cli.get_user_config")
+    @patch("cookiecutter.cli.os.path.exists")
+    @patch("cookiecutter.cli.click.echo")
+    @patch("cookiecutter.cli.sys.exit")
+    def test_list_installed_templates_dir_not_exists(
+        self, mock_exit, mock_echo, mock_exists, mock_get_user_config
+    ):
+        mock_get_user_config.return_value = {"cookiecutters_dir": "/fake/dir"}
+        mock_exists.return_value = False
+>       list_installed_templates(default_config=True, passed_config_file=None)
+
+generated_tests/python/test_cli.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+default_config = True, passed_config_file = None
+
+    def list_installed_templates(
+        default_config: bool | dict[str, Any], passed_config_file: str | None
+    ) -> None:
+        """List installed (locally cloned) templates. Use cookiecutter --list-installed."""
+        config = get_user_config(passed_config_file, default_config)
+        cookiecutter_folder: str = config['cookiecutters_dir']
+        if not os.path.exists(cookiecutter_folder):
+            click.echo(
+                f"Error: Cannot list installed templates. "
+                f"Folder does not exist: {cookiecutter_folder}"
+            )
+            sys.exit(-1)
+    
+        template_names = [
+            folder
+>           for folder in os.listdir(cookiecutter_folder)
+            if os.path.exists(
+                os.path.join(cookiecutter_folder, folder, 'cookiecutter.json')
+            )
+        ]
+E       FileNotFoundError: [Errno 2] No such file or directory: '/fake/dir'
+
+cookiecutter/cli.py:87: FileNotFoundError
+____________________ TestMainCommand.test_main_no_arguments ____________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002ba890>
+runner = <click.testing.CliRunner object at 0x7f2700182320>
+mock_click_echo = <MagicMock name='echo' id='139805482033424'>
+mock_sys_exit = <MagicMock name='exit' id='139805481677680'>
+
+    def test_main_no_arguments(
+        self, runner, mock_click_echo, mock_sys_exit
+    ):
+        result = runner.invoke(main, [])
+>       assert result.exit_code == 0
+E       assert 1 == 0
+E        +  where 1 = <Result AttributeError("'NoneType' object has no attribute 'partition'")>.exit_code
+
+generated_tests/python/test_cli.py:173: AssertionError
+------------------------------ Captured log call -------------------------------
+DEBUG    cookiecutter.config:config.py:134 User config not found. Loading default config.
+______________________ TestMainCommand.test_main_success _______________________
+
+args = (<test_cli.TestMainCommand object at 0x7f27002b98a0>,)
+keywargs = {'mock_configure_logger': <MagicMock name='configure_logger' id='139805482093584'>, 'mock_cookiecutter': <MagicMock name='cookiecutter' id='139805482398480'>, 'mock_get_user_config_func': <MagicMock name='get_user_config' id='139805482179104'>, 'mock_sys_exit': <MagicMock name='exit' id='139805482222928'>, ...}
+
+    @wraps(func)
+    def patched(*args, **keywargs):
+>       with self.decoration_helper(patched,
+                                    args,
+                                    keywargs) as (newargs, newkeywargs):
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1376: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/contextlib.py:135: in __enter__
+    return next(self.gen)
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1358: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/contextlib.py:492: in enter_context
+    result = _cm_type.__enter__(cm)
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1447: in __enter__
+    original, local = self.get_original()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f27002b8850>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'cookiecutter.cli' from '/home/runner/work/cookiecutter/cookiecutter/cookiecutter/cli.py'> does not have the attribute 'run_pre_prompt_hook'
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1420: AttributeError
+_______________ TestMainCommand.test_main_cookiecutter_exception _______________
+
+self = <test_cli.TestMainCommand object at 0x7f27002bab60>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805482394448'>
+runner = <click.testing.CliRunner object at 0x7f2700196980>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805482117456'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805482108480'>
+mock_click_echo = <MagicMock name='echo' id='139805481890768'>
+mock_sys_exit = <MagicMock name='exit' id='139805481888704'>
+
+    @patch("cookiecutter.cli.cookiecutter")
+    def test_main_cookiecutter_exception(
+        self,
+        mock_cookiecutter,
+        runner,
+        mock_get_user_config_func,
+        mock_configure_logger,
+        mock_click_echo,
+        mock_sys_exit,
+    ):
+        mock_cookiecutter.side_effect = OutputDirExistsException("Output directory exists.")
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--no-input",
+                "--output-dir",
+                "/existing_output",
+            ],
+        )
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:243: AssertionError
+___________ TestMainCommand.test_main_undefined_variable_in_template ___________
+
+self = <test_cli.TestMainCommand object at 0x7f27002badd0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805481633056'>
+runner = <click.testing.CliRunner object at 0x7f270015eb00>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805481559104'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805481554064'>
+mock_click_echo = <MagicMock name='echo' id='139805481565584'>
+mock_sys_exit = <MagicMock name='exit' id='139805481226672'>
+
+    @patch("cookiecutter.cli.cookiecutter")
+    def test_main_undefined_variable_in_template(
+        self,
+        mock_cookiecutter,
+        runner,
+        mock_get_user_config_func,
+        mock_configure_logger,
+        mock_click_echo,
+        mock_sys_exit,
+    ):
+        error = MagicMock()
+        error.message = "Undefined variable error."
+        undefined_error = UndefinedVariableInTemplate(
+            "Undefined variable in template",
+            error,
+            {"variable": "value"},
+        )
+        mock_cookiecutter.side_effect = undefined_error
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--no-input",
+            ],
+        )
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:274: AssertionError
+________________ TestMainCommand.test_main_conflicting_options _________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002baf80>
+runner = <click.testing.CliRunner object at 0x7f27000bd330>
+
+    def test_main_conflicting_options(
+        self, runner
+    ):
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--no-input",
+                "--replay",
+            ],
+        )
+        assert result.exit_code != 0
+>       assert "Cannot be combined with the --replay flag" in result.output
+E       AssertionError: assert 'Cannot be combined with the --replay flag' in 'You can not use both replay and no_input or extra_context at the same time.\n'
+E        +  where 'You can not use both replay and no_input or extra_context at the same time.\n' = <Result SystemExit(1)>.output
+
+generated_tests/python/test_cli.py:293: AssertionError
+__________________ TestMainCommand.test_main_accept_hooks_yes __________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002bb190>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805483523792'>
+runner = <click.testing.CliRunner object at 0x7f27003158d0>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805483685760'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805483683216'>
+
+    @patch("cookiecutter.cli.cookiecutter")
+    def test_main_accept_hooks_yes(
+        self,
+        mock_cookiecutter,
+        runner,
+        mock_get_user_config_func,
+        mock_configure_logger,
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--accept-hooks", "yes",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay=False,
+            overwrite_if_exists=False,
+            output_dir=".",
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:312: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805483523792'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f2700ff2c20>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+__________________ TestMainCommand.test_main_accept_hooks_no ___________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002bb370>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805480777328'>
+runner = <click.testing.CliRunner object at 0x7f27002ed630>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805481890720'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805480770128'>
+
+    @patch("cookiecutter.cli.cookiecutter")
+    def test_main_accept_hooks_no(
+        self,
+        mock_cookiecutter,
+        runner,
+        mock_get_user_config_func,
+        mock_configure_logger,
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--accept-hooks", "no",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay=False,
+            overwrite_if_exists=False,
+            output_dir=".",
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=False,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:346: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805480777328'>
+args = ('template',)
+kwargs = {'accept_hooks': False, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=False, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=False, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f2700149bd0>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=False, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=False, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+________________ TestMainCommand.test_main_overwrite_if_exists _________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002bb940>
+runner = <click.testing.CliRunner object at 0x7f2700199750>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805481505968'>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805481087952'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805480981296'>
+
+    def test_main_overwrite_if_exists(
+        self, runner, mock_cookiecutter, mock_get_user_config_func, mock_configure_logger
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--overwrite-if-exists",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay=False,
+            overwrite_if_exists=True,
+            output_dir=".",
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:415: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805481505968'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=True, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay=False, overwrite_if_exists=True, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f270014a170>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=True, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=True, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+________________ TestMainCommand.test_main_skip_if_file_exists _________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002bbb50>
+runner = <click.testing.CliRunner object at 0x7f2700099450>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805481079792'>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805481978608'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805481985664'>
+
+    def test_main_skip_if_file_exists(
+        self, runner, mock_cookiecutter, mock_get_user_config_func, mock_configure_logger
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--skip-if-file-exists",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay=False,
+            overwrite_if_exists=False,
+            output_dir=".",
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=True,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:444: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805481079792'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=True, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=True, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f2700300280>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=True, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=True, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+___________________ TestMainCommand.test_main_extra_context ____________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002bbd30>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805482399440'>
+runner = <click.testing.CliRunner object at 0x7f270015ec20>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805481886256'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805481879152'>
+
+    @patch("cookiecutter.cli.cookiecutter")
+    def test_main_extra_context(
+        self,
+        mock_cookiecutter,
+        runner,
+        mock_get_user_config_func,
+        mock_configure_logger,
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "key1=value1",
+                "key2=value2",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context=OrderedDict([("key1", "value1"), ("key2", "value2")]),
+            replay=False,
+            overwrite_if_exists=False,
+            output_dir=".",
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:479: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805482399440'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context=OrderedDict([('key1', 'value1'), ('key2', 'value2')]), replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=OrderedDict([('key1', 'value1'), ('key2', 'value2')]), replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f270014b130>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context=OrderedDict([('key1', 'value1'), ('key2', 'value2')]), replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=OrderedDict([('key1', 'value1'), ('key2', 'value2')]), replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+_____________________ TestMainCommand.test_main_output_dir _____________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002bbf40>
+runner = <click.testing.CliRunner object at 0x7f2700037eb0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805480680992'>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805481179680'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805481185104'>
+
+    def test_main_output_dir(
+        self, runner, mock_cookiecutter, mock_get_user_config_func, mock_configure_logger
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--output-dir",
+                "/custom/output",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay=False,
+            overwrite_if_exists=False,
+            output_dir="/custom/output",
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:509: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805480680992'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='/custom/output', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='/custom/output', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f270014b6d0>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='/custom/output', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='/custom/output', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+_______________________ TestMainCommand.test_main_replay _______________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002ec160>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805482121488'>
+runner = <click.testing.CliRunner object at 0x7f2700315cf0>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805483691424'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805483693344'>
+
+    @patch("cookiecutter.cli.cookiecutter")
+    def test_main_replay(
+        self,
+        mock_cookiecutter,
+        runner,
+        mock_get_user_config_func,
+        mock_configure_logger,
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--replay",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay=True,
+            overwrite_if_exists=False,
+            output_dir=".",
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:543: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805482121488'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=True, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay=True, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f270014a320>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=True, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=True, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+____________________ TestMainCommand.test_main_config_file _____________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002ec370>
+runner = <click.testing.CliRunner object at 0x7f27002b9570>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805483315120'>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805480990128'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805480985904'>
+
+    def test_main_config_file(
+        self, runner, mock_cookiecutter, mock_get_user_config_func, mock_configure_logger
+    ):
+        mock_get_user_config_func.return_value = {"config_key": "config_value"}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--config-file",
+                "/path/to/config.yaml",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay=False,
+            overwrite_if_exists=False,
+            output_dir=".",
+            config_file="/path/to/config.yaml",
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:573: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805483315120'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': '/path/to/config.yaml', 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file='/path/to/config.yaml', default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file='/path/to/config.yaml', default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f270014bd00>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file='/path/to/config.yaml', default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file='/path/to/config.yaml', default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+___________________ TestMainCommand.test_main_default_config ___________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002ec580>
+runner = <click.testing.CliRunner object at 0x7f2700163520>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805481901920'>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805481907680'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805482048800'>
+
+    def test_main_default_config(
+        self, runner, mock_cookiecutter, mock_get_user_config_func, mock_configure_logger
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--default-config",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay=False,
+            overwrite_if_exists=False,
+            output_dir=".",
+            config_file=None,
+            default_config=True,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:602: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805481901920'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': True, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=True, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=True, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f270014b130>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=True, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=True, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+______________________ TestMainCommand.test_main_password ______________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002ec9a0>
+runner = <click.testing.CliRunner object at 0x7f27001b0c10>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805482225664'>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805481565872'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805480670624'>
+
+    def test_main_password(
+        self, runner, mock_cookiecutter, mock_get_user_config_func, mock_configure_logger
+    ):
+        mock_get_user_config_func.return_value = {}
+        with patch.dict(os.environ, {"COOKIECUTTER_REPO_PASSWORD": "secret"}):
+            result = runner.invoke(
+                main,
+                [
+                    "template",
+                ],
+            )
+            assert result.exit_code == 0
+>           mock_cookiecutter.assert_called_once_with(
+                "template",
+                checkout=None,
+                no_input=False,
+                extra_context={},
+                replay=False,
+                overwrite_if_exists=False,
+                output_dir=".",
+                config_file=None,
+                default_config=False,
+                password="secret",
+                directory=None,
+                skip_if_file_exists=False,
+                accept_hooks=True,
+                keep_project_on_failure=False,
+            )
+
+generated_tests/python/test_cli.py:649: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805482225664'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password='secret', directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password='secret', directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f270014aef0>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password='secret', directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password='secret', directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+_____________________ TestMainCommand.test_main_directory ______________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002bbc40>
+runner = <click.testing.CliRunner object at 0x7f270010eda0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805481554688'>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805481906096'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805481898032'>
+
+    def test_main_directory(
+        self, runner, mock_cookiecutter, mock_get_user_config_func, mock_configure_logger
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--directory",
+                "subdir/templates",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay=False,
+            overwrite_if_exists=False,
+            output_dir=".",
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory="subdir/templates",
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:679: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805481554688'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory='subdir/templates', skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory='subdir/templates', skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f270014b130>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory='subdir/templates', skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory='subdir/templates', skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+______________ TestMainCommand.test_main_keep_project_on_failure _______________
+
+self = <test_cli.TestMainCommand object at 0x7f27002bb3a0>
+runner = <click.testing.CliRunner object at 0x7f2700081fc0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805482176656'>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805481075952'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805481081472'>
+
+    def test_main_keep_project_on_failure(
+        self, runner, mock_cookiecutter, mock_get_user_config_func, mock_configure_logger
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--keep-project-on-failure",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay=False,
+            overwrite_if_exists=False,
+            output_dir=".",
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=True,
+        )
+
+generated_tests/python/test_cli.py:708: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805482176656'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=True)
+actual = call('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=True)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f270014bbe0>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=True)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=True)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+____________________ TestMainCommand.test_main_replay_file _____________________
+
+self = <test_cli.TestMainCommand object at 0x7f27002ecac0>
+runner = <click.testing.CliRunner object at 0x7f27001dafe0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139805482396320'>
+mock_get_user_config_func = <MagicMock name='get_user_config' id='139805483683696'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139805481173728'>
+
+    def test_main_replay_file(
+        self, runner, mock_cookiecutter, mock_get_user_config_func, mock_configure_logger
+    ):
+        mock_get_user_config_func.return_value = {}
+        result = runner.invoke(
+            main,
+            [
+                "template",
+                "--replay-file",
+                "/path/to/replay.json",
+            ],
+        )
+        assert result.exit_code == 0
+>       mock_cookiecutter.assert_called_once_with(
+            "template",
+            checkout=None,
+            no_input=False,
+            extra_context={},
+            replay="/path/to/replay.json",
+            overwrite_if_exists=False,
+            output_dir=".",
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:753: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='139805482396320'>
+args = ('template',)
+kwargs = {'accept_hooks': True, 'checkout': None, 'config_file': None, 'default_config': False, ...}
+expected = call('template', checkout=None, no_input=False, extra_context={}, replay='/path/to/replay.json', overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('template', None, False, extra_context=None, replay='/path/to/replay.json', overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f270014b6d0>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay='/path/to/replay.json', overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('template', None, False, extra_context=None, replay='/path/to/replay.json', overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+
+---------- coverage: platform linux, python 3.10.15-final-0 ----------
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+cookiecutter/__init__.py          6      0   100%
+cookiecutter/cli.py              77      1    99%   268
+cookiecutter/config.py           61     36    41%   38-39, 48-58, 63-86, 113, 117-118, 122-123, 132-133, 139-140
+cookiecutter/environment.py      23     14    39%   28-43, 51-56, 71
+cookiecutter/exceptions.py       26      1    96%   143
+cookiecutter/extensions.py       69     69     0%   3-174
+cookiecutter/find.py             16      8    50%   24-38
+cookiecutter/generate.py        202    175    13%   49-56, 66-123, 140-172, 202-260, 271-297, 316-322, 349-466
+cookiecutter/hooks.py            91     68    25%   42-48, 63-77, 86-105, 117-127, 138-144, 163-177, 186-201
+cookiecutter/log.py              22      5    77%   40-44
+cookiecutter/main.py             73     47    36%   92-200, 205, 208-209, 212
+cookiecutter/prompt.py          188    149    21%   31-42, 53-58, 75-80, 88, 100-135, 146-158, 171, 181-189, 220-236, 241-247, 257-259, 275-278, 289-360, 373-400, 415-435
+cookiecutter/replay.py           25     17    32%   21-23, 28-37, 42-51
+cookiecutter/repository.py       42     10    76%   45, 51, 104-112, 114-121, 127, 133
+cookiecutter/utils.py            52     31    40%   30-31, 39, 47-52, 61-67, 75-76, 82-88, 93-98, 103-105
+cookiecutter/vcs.py              63     48    24%   41-51, 60, 80-139
+cookiecutter/zipfile.py          64     54    16%   38-118
+-----------------------------------------------------------
+TOTAL                          1100    733    33%
+
+=========================== short test summary info ============================
+FAILED generated_tests/python/test_cli.py::TestListInstalledTemplates::test_list_installed_templates_success - AssertionError: echo('2 installed templates: ') call not found
+FAILED generated_tests/python/test_cli.py::TestListInstalledTemplates::test_list_installed_templates_dir_not_exists - FileNotFoundError: [Errno 2] No such file or directory: '/fake/dir'
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_no_arguments - assert 1 == 0
+ +  where 1 = <Result AttributeError("'NoneType' object has no attribute 'partition'")>.exit_code
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_success - AttributeError: <module 'cookiecutter.cli' from '/home/runner/work/cookiecutter/cookiecutter/cookiecutter/cli.py'> does not have the attribute 'run_pre_prompt_hook'
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_cookiecutter_exception - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_undefined_variable_in_template - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_conflicting_options - AssertionError: assert 'Cannot be combined with the --replay flag' in 'You can not use both replay and no_input or extra_context at the same time.\n'
+ +  where 'You can not use both replay and no_input or extra_context at the same time.\n' = <Result SystemExit(1)>.output
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_accept_hooks_yes - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_accept_hooks_no - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=False, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=False, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_overwrite_if_exists - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=True, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=True, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_skip_if_file_exists - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=True, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=True, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_extra_context - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context=OrderedDict([('key1', 'value1'), ('key2', 'value2')]), replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=OrderedDict([('key1', 'value1'), ('key2', 'value2')]), replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_output_dir - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='/custom/output', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='/custom/output', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_replay - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=True, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=True, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_config_file - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file='/path/to/config.yaml', default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file='/path/to/config.yaml', default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_default_config - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=True, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=True, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_password - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password='secret', directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password='secret', directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_directory - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory='subdir/templates', skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory='subdir/templates', skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_keep_project_on_failure - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=True)
+Actual: cookiecutter('template', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=True)
+FAILED generated_tests/python/test_cli.py::TestMainCommand::test_main_replay_file - AssertionError: expected call not found.
+Expected: cookiecutter('template', checkout=None, no_input=False, extra_context={}, replay='/path/to/replay.json', overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('template', None, False, extra_context=None, replay='/path/to/replay.json', overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+======================== 20 failed, 13 passed in 2.33s =========================
