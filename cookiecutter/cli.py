@@ -107,6 +107,11 @@ def list_installed_templates(
         click.echo(
             f"Error: Cannot list installed templates. "
             f"Folder does not exist: {cookiecutter_folder}"
+
+
+
+
+            
         )
         sys.exit(-1)
 
