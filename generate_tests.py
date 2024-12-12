@@ -430,7 +430,7 @@ Is there anything missing that I need to install to run this test? If yes, pleas
             'https://api.openai.com/v1/chat/completions',
             headers=headers,
             json=data,
-            timeout=60
+            timeout=180
         )
         response.raise_for_status()
         generated_text = response.json()['choices'][0]['message']['content']
