@@ -1,0 +1,61 @@
+No data to report.
+============================= test session starts ==============================
+platform linux -- Python 3.10.15, pytest-8.3.4, pluggy-1.5.0 -- /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/cookiecutter/cookiecutter
+configfile: pyproject.toml
+plugins: cov-6.0.0, anyio-4.7.0
+collecting ... collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+_____________ ERROR collecting generated_tests/python/test_cli.py ______________
+ImportError while importing test module '/home/runner/work/cookiecutter/cookiecutter/generated_tests/python/test_cli.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/site-packages/_pytest/python.py:493: in importtestmodule
+    mod = import_path(
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/site-packages/_pytest/pathlib.py:587: in import_path
+    importlib.import_module(module_name)
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1050: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1027: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1006: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:688: in _load_unlocked
+    ???
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/site-packages/_pytest/assertion/rewrite.py:184: in exec_module
+    exec(co, module.__dict__)
+generated_tests/python/test_cli.py:29: in <module>
+    from cookiecutter.log import logger
+E   ImportError: cannot import name 'logger' from 'cookiecutter.log' (/home/runner/work/cookiecutter/cookiecutter/cookiecutter/log.py)
+
+---------- coverage: platform linux, python 3.10.15-final-0 ----------
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+cookiecutter/__init__.py          6      0   100%
+cookiecutter/cli.py              77     38    51%   56-66, 102-120, 233-290, 294
+cookiecutter/config.py           61     45    26%   38-39, 48-58, 63-86, 112-140
+cookiecutter/environment.py      23     14    39%   28-43, 51-56, 71
+cookiecutter/exceptions.py       26      4    85%   137-139, 143
+cookiecutter/extensions.py       69     69     0%   3-174
+cookiecutter/find.py             16      8    50%   24-38
+cookiecutter/generate.py        202    175    13%   49-56, 66-123, 140-172, 202-260, 271-297, 316-322, 349-466
+cookiecutter/hooks.py            91     68    25%   42-48, 63-77, 86-105, 117-127, 138-144, 163-177, 186-201
+cookiecutter/log.py              22     16    27%   31-56
+cookiecutter/main.py             73     52    29%   72-200, 205, 208-209, 212
+cookiecutter/prompt.py          188    149    21%   31-42, 53-58, 75-80, 88, 100-135, 146-158, 171, 181-189, 220-236, 241-247, 257-259, 275-278, 289-360, 373-400, 415-435
+cookiecutter/replay.py           25     17    32%   21-23, 28-37, 42-51
+cookiecutter/repository.py       42     29    31%   30, 35, 44-53, 62-67, 101-139
+cookiecutter/utils.py            52     31    40%   30-31, 39, 47-52, 61-67, 75-76, 82-88, 93-98, 103-105
+cookiecutter/vcs.py              63     48    24%   41-51, 60, 80-139
+cookiecutter/zipfile.py          64     54    16%   38-118
+-----------------------------------------------------------
+TOTAL                          1100    817    26%
+
+=========================== short test summary info ============================
+ERROR generated_tests/python/test_cli.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.80s ===============================
