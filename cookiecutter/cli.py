@@ -23,8 +23,6 @@ if TYPE_CHECKING:
 
 
 
-
-
 import click
 
 from cookiecutter import __version__
@@ -66,6 +64,9 @@ def validate_extra_context(
     # Convert tuple -- e.g.: ('program_name=foobar', 'startsecs=66')
     # to dict -- e.g.: {'program_name': 'foobar', 'startsecs': '66'}
     return OrderedDict(s.split('=', 1) for s in value) or None
+
+
+
 
 
 
