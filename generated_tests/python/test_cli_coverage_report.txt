@@ -1,0 +1,309 @@
+No data to report.
+============================= test session starts ==============================
+platform linux -- Python 3.10.15, pytest-8.3.4, pluggy-1.5.0 -- /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/cookiecutter/cookiecutter
+configfile: pyproject.toml
+plugins: cov-6.0.0, anyio-4.7.0
+collecting ... collected 38 items
+
+generated_tests/python/test_cli.py::test_version_msg PASSED              [  2%]
+generated_tests/python/test_cli.py::test_validate_extra_context_normal_cases[extra_context0-expected0] PASSED [  5%]
+generated_tests/python/test_cli.py::test_validate_extra_context_normal_cases[extra_context1-None] PASSED [  7%]
+generated_tests/python/test_cli.py::test_validate_extra_context_normal_cases[extra_context2-expected2] PASSED [ 10%]
+generated_tests/python/test_cli.py::test_validate_extra_context_error_cases[invalid_context0] PASSED [ 13%]
+generated_tests/python/test_cli.py::test_validate_extra_context_error_cases[invalid_context1] PASSED [ 15%]
+generated_tests/python/test_cli.py::test_list_installed_templates_success FAILED [ 18%]
+generated_tests/python/test_cli.py::test_list_installed_templates_no_directory PASSED [ 21%]
+generated_tests/python/test_cli.py::test_main_no_arguments PASSED        [ 23%]
+generated_tests/python/test_cli.py::test_main_list_installed PASSED      [ 26%]
+generated_tests/python/test_cli.py::test_main_success PASSED             [ 28%]
+generated_tests/python/test_cli.py::test_main_cookiecutter_exception PASSED [ 31%]
+generated_tests/python/test_cli.py::test_main_undefined_variable_exception PASSED [ 34%]
+generated_tests/python/test_cli.py::test_main_help ERROR                 [ 36%]
+generated_tests/python/test_cli.py::test_main_version_option ERROR       [ 39%]
+generated_tests/python/test_cli.py::test_main_replay_option PASSED       [ 42%]
+generated_tests/python/test_cli.py::test_main_extra_context PASSED       [ 44%]
+generated_tests/python/test_cli.py::test_main_invalid_combination_no_input_and_replay FAILED [ 47%]
+generated_tests/python/test_cli.py::test_main_with_password FAILED       [ 50%]
+generated_tests/python/test_cli.py::test_main_with_config_file FAILED    [ 52%]
+generated_tests/python/test_cli.py::test_main_overwrite_if_exists PASSED [ 55%]
+generated_tests/python/test_cli.py::test_main_skip_if_file_exists PASSED [ 57%]
+generated_tests/python/test_cli.py::test_main_output_dir PASSED          [ 60%]
+generated_tests/python/test_cli.py::test_main_accept_hooks_yes PASSED    [ 63%]
+generated_tests/python/test_cli.py::test_main_accept_hooks_ask_yes PASSED [ 65%]
+generated_tests/python/test_cli.py::test_main_accept_hooks_ask_no PASSED [ 68%]
+generated_tests/python/test_cli.py::test_main_keep_project_on_failure PASSED [ 71%]
+generated_tests/python/test_cli.py::test_main_directory_option PASSED    [ 73%]
+generated_tests/python/test_cli.py::test_main_debug_file_option FAILED   [ 76%]
+generated_tests/python/test_cli.py::test_main_replay_file_option PASSED  [ 78%]
+generated_tests/python/test_cli.py::test_main_checkout_option FAILED     [ 81%]
+generated_tests/python/test_cli.py::test_main_default_config_option PASSED [ 84%]
+generated_tests/python/test_cli.py::test_main_default_output_dir PASSED  [ 86%]
+generated_tests/python/test_cli.py::test_main_no_arguments_help_option FAILED [ 89%]
+generated_tests/python/test_cli.py::test_main_invalid_accept_hooks_option FAILED [ 92%]
+generated_tests/python/test_cli.py::test_main_invalid_extra_context_format PASSED [ 94%]
+generated_tests/python/test_cli.py::test_main_empty_template_argument PASSED [ 97%]
+generated_tests/python/test_cli.py::test_main_template_help_argument PASSED [100%]
+
+==================================== ERRORS ====================================
+_______________________ ERROR at setup of test_main_help _______________________
+file /home/runner/work/cookiecutter/cookiecutter/generated_tests/python/test_cli.py, line 185
+  @mock.patch("cookiecutter.cli.list_installed_templates")
+  def test_main_help(runner, mock_list_installed):
+E       fixture 'mock_list_installed' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, cov, doctest_namespace, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, runner, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/runner/work/cookiecutter/cookiecutter/generated_tests/python/test_cli.py:185
+__________________ ERROR at setup of test_main_version_option __________________
+file /home/runner/work/cookiecutter/cookiecutter/generated_tests/python/test_cli.py, line 194
+  @mock.patch("cookiecutter.cli.cookiecutter")
+  def test_main_version_option(runner, mock_cookiecutter):
+E       fixture 'mock_cookiecutter' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, cov, doctest_namespace, monkeypatch, no_cover, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, runner, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/runner/work/cookiecutter/cookiecutter/generated_tests/python/test_cli.py:194
+=================================== FAILURES ===================================
+____________________ test_list_installed_templates_success _____________________
+
+mock_get_user_config = <MagicMock name='get_user_config' id='139964793393344'>
+mock_listdir = <MagicMock name='listdir' id='139964793396944'>
+mock_exists = <MagicMock name='exists' id='139964793482800'>
+mock_echo = <MagicMock name='echo' id='139964793507120'>
+
+    @mock.patch("cookiecutter.cli.click.echo")
+    @mock.patch("cookiecutter.cli.os.path.exists")
+    @mock.patch("cookiecutter.cli.os.listdir")
+    @mock.patch("cookiecutter.cli.get_user_config")
+    def test_list_installed_templates_success(
+        mock_get_user_config, mock_listdir, mock_exists, mock_echo
+    ):
+        """Test list_installed_templates successfully lists templates."""
+        mock_get_user_config.return_value = {"cookiecutters_dir": "/fake/dir"}
+        mock_exists.side_effect = lambda path: path in [
+            "/fake/dir",
+            "/fake/dir/template1/cookiecutter.json",
+            "/fake/dir/template2/cookiecutter.json",
+        ]
+        mock_listdir.return_value = ["template1", "template2", "not_a_template"]
+    
+>       with pytest.raises(SystemExit) as exc:
+E       Failed: DID NOT RAISE <class 'SystemExit'>
+
+generated_tests/python/test_cli.py:97: Failed
+______________ test_main_invalid_combination_no_input_and_replay _______________
+
+args = (), keywargs = {}
+
+    @wraps(func)
+    def patched(*args, **keywargs):
+>       with self.decoration_helper(patched,
+                                    args,
+                                    keywargs) as (newargs, newkeywargs):
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1376: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/contextlib.py:135: in __enter__
+    return next(self.gen)
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1358: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/contextlib.py:492: in enter_context
+    result = _cm_type.__enter__(cm)
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1447: in __enter__
+    original, local = self.get_original()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f4c17e4ccd0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'cookiecutter.cli' from '/home/runner/work/cookiecutter/cookiecutter/cookiecutter/cli.py'> does not have the attribute 'List_installed_templates'
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1420: AttributeError
+___________________________ test_main_with_password ____________________________
+
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139964792910224'>
+mock_env_get = <MagicMock name='get' id='139964792903648'>
+runner = <click.testing.CliRunner object at 0x7f4c17c33250>
+
+    @mock.patch("cookiecutter.cli.os.environ.get")
+    @mock.patch("cookiecutter.cli.cookiecutter")
+    def test_main_with_password(mock_cookiecutter, mock_env_get, runner):
+        """Test main command with COOKIECUTTER_REPO_PASSWORD environment variable."""
+        mock_env_get.return_value = "secret"
+        mock_cookiecutter.return_value = "generated_project"
+    
+        result = runner.invoke(main, ["template/path"])
+>       assert result.exit_code == 0
+E       assert 1 == 0
+E        +  where 1 = <Result SystemExit(1)>.exit_code
+
+generated_tests/python/test_cli.py:243: AssertionError
+__________________________ test_main_with_config_file __________________________
+
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139964793762960'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139964793761568'>
+runner = <click.testing.CliRunner object at 0x7f4c17d039d0>
+
+    @mock.patch("cookiecutter.cli.get_user_config")
+    @mock.patch("cookiecutter.cli.cookiecutter")
+    def test_main_with_config_file(mock_cookiecutter, mock_get_user_config, runner):
+        """Test main command with --config-file option."""
+        mock_get_user_config.return_value = {"cookiecutters_dir": "/custom/dir"}
+        mock_cookiecutter.return_value = "generated_project"
+    
+        result = runner.invoke(main, ["template/path", "--config-file", "config.yaml"])
+        assert result.exit_code == 0
+>       mock_get_user_config.assert_called_with(config_file="config.yaml", default_config=False)
+
+generated_tests/python/test_cli.py:258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='get_user_config' id='139964793761568'>, args = ()
+kwargs = {'config_file': 'config.yaml', 'default_config': False}
+expected = "get_user_config(config_file='config.yaml', default_config=False)"
+actual = 'not called.'
+error_message = "expected call not found.\nExpected: get_user_config(config_file='config.yaml', default_config=False)\nActual: not called."
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+>           raise AssertionError(error_message)
+E           AssertionError: expected call not found.
+E           Expected: get_user_config(config_file='config.yaml', default_config=False)
+E           Actual: not called.
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:920: AssertionError
+_________________________ test_main_debug_file_option __________________________
+
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139964792907968'>
+runner = <click.testing.CliRunner object at 0x7f4c17c32c20>
+
+    @mock.patch("cookiecutter.cli.cookiecutter")
+    def test_main_debug_file_option(mock_cookiecutter, runner):
+        """Test main command with --debug-file option."""
+        mock_cookiecutter.return_value = "generated_project"
+    
+        result = runner.invoke(main, ["template/path", "--debug-file", "debug.log"])
+        assert result.exit_code == 0
+        mock_cookiecutter.assert_called_once()
+        _, kwargs = mock_cookiecutter.call_args
+>       assert kwargs["debug_file"] == "debug.log"
+E       KeyError: 'debug_file'
+
+generated_tests/python/test_cli.py:369: KeyError
+__________________________ test_main_checkout_option ___________________________
+
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139964795332848'>
+runner = <click.testing.CliRunner object at 0x7f4c17e829e0>
+
+    @mock.patch("cookiecutter.cli.cookiecutter")
+    def test_main_checkout_option(mock_cookiecutter, runner):
+        """Test main command with --checkout option."""
+        mock_cookiecutter.return_value = "generated_project"
+    
+        result = runner.invoke(main, ["template/path", "--checkout", "develop"])
+        assert result.exit_code == 0
+        mock_cookiecutter.assert_called_once()
+        _, kwargs = mock_cookiecutter.call_args
+>       assert kwargs["checkout"] == "develop"
+E       KeyError: 'checkout'
+
+generated_tests/python/test_cli.py:393: KeyError
+______________________ test_main_no_arguments_help_option ______________________
+
+runner = <MagicMock name='cookiecutter' id='139964792908592'>
+
+    @mock.patch("cookiecutter.cli.cookiecutter")
+    def test_main_no_arguments_help_option(runner):
+        """Test main command with --help option."""
+        result = runner.invoke(main, ["--help"])
+>       assert result.exit_code == 0
+E       AssertionError: assert <MagicMock name='cookiecutter.invoke().exit_code' id='139964793002912'> == 0
+E        +  where <MagicMock name='cookiecutter.invoke().exit_code' id='139964793002912'> = <MagicMock name='cookiecutter.invoke()' id='139964793007280'>.exit_code
+
+generated_tests/python/test_cli.py:424: AssertionError
+____________________ test_main_invalid_accept_hooks_option _____________________
+
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139964793724144'>
+runner = <click.testing.CliRunner object at 0x7f4c17cf9d20>
+
+    @mock.patch("cookiecutter.cli.cookiecutter")
+    def test_main_invalid_accept_hooks_option(mock_cookiecutter, runner):
+        """Test main command with invalid --accept-hooks option."""
+        result = runner.invoke(main, ["template/path", "--accept-hooks", "invalid"])
+        assert result.exit_code != 0
+>       assert "invalid choice" in result.output
+E       assert 'invalid choice' in "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'invalid' is not one of 'yes', 'ask', 'no'.\n"
+E        +  where "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'invalid' is not one of 'yes', 'ask', 'no'.\n" = <Result SystemExit(2)>.output
+
+generated_tests/python/test_cli.py:433: AssertionError
+
+---------- coverage: platform linux, python 3.10.15-final-0 ----------
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+cookiecutter/__init__.py          6      0   100%
+cookiecutter/cli.py              77      1    99%   271
+cookiecutter/config.py           61     45    26%   38-39, 48-58, 63-86, 112-140
+cookiecutter/environment.py      23     14    39%   28-43, 51-56, 71
+cookiecutter/exceptions.py       26      1    96%   143
+cookiecutter/extensions.py       69     69     0%   3-174
+cookiecutter/find.py             16      8    50%   24-38
+cookiecutter/generate.py        202    175    13%   49-56, 66-123, 140-172, 202-260, 271-297, 316-322, 349-466
+cookiecutter/hooks.py            91     68    25%   42-48, 63-77, 86-105, 117-127, 138-144, 163-177, 186-201
+cookiecutter/log.py              22      0   100%
+cookiecutter/main.py             73     52    29%   72-200, 205, 208-209, 212
+cookiecutter/prompt.py          188    149    21%   31-42, 53-58, 75-80, 88, 100-135, 146-158, 171, 181-189, 220-236, 241-247, 257-259, 275-278, 289-360, 373-400, 415-435
+cookiecutter/replay.py           25     17    32%   21-23, 28-37, 42-51
+cookiecutter/repository.py       42     29    31%   30, 35, 44-53, 62-67, 101-139
+cookiecutter/utils.py            52     31    40%   30-31, 39, 47-52, 61-67, 75-76, 82-88, 93-98, 103-105
+cookiecutter/vcs.py              63     48    24%   41-51, 60, 80-139
+cookiecutter/zipfile.py          64     54    16%   38-118
+-----------------------------------------------------------
+TOTAL                          1100    761    31%
+
+=========================== short test summary info ============================
+FAILED generated_tests/python/test_cli.py::test_list_installed_templates_success - Failed: DID NOT RAISE <class 'SystemExit'>
+FAILED generated_tests/python/test_cli.py::test_main_invalid_combination_no_input_and_replay - AttributeError: <module 'cookiecutter.cli' from '/home/runner/work/cookiecutter/cookiecutter/cookiecutter/cli.py'> does not have the attribute 'List_installed_templates'
+FAILED generated_tests/python/test_cli.py::test_main_with_password - assert 1 == 0
+ +  where 1 = <Result SystemExit(1)>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_with_config_file - AssertionError: expected call not found.
+Expected: get_user_config(config_file='config.yaml', default_config=False)
+Actual: not called.
+FAILED generated_tests/python/test_cli.py::test_main_debug_file_option - KeyError: 'debug_file'
+FAILED generated_tests/python/test_cli.py::test_main_checkout_option - KeyError: 'checkout'
+FAILED generated_tests/python/test_cli.py::test_main_no_arguments_help_option - AssertionError: assert <MagicMock name='cookiecutter.invoke().exit_code' id='139964793002912'> == 0
+ +  where <MagicMock name='cookiecutter.invoke().exit_code' id='139964793002912'> = <MagicMock name='cookiecutter.invoke()' id='139964793007280'>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_invalid_accept_hooks_option - assert 'invalid choice' in "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'invalid' is not one of 'yes', 'ask', 'no'.\n"
+ +  where "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'invalid' is not one of 'yes', 'ask', 'no'.\n" = <Result SystemExit(2)>.output
+ERROR generated_tests/python/test_cli.py::test_main_help
+ERROR generated_tests/python/test_cli.py::test_main_version_option
+==================== 8 failed, 28 passed, 2 errors in 0.96s ====================
