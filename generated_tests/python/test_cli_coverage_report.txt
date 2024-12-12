@@ -1,0 +1,674 @@
+No data to report.
+============================= test session starts ==============================
+platform linux -- Python 3.10.15, pytest-8.3.4, pluggy-1.5.0 -- /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/cookiecutter/cookiecutter
+configfile: pyproject.toml
+plugins: cov-6.0.0, anyio-4.7.0
+collecting ... collected 23 items
+
+generated_tests/python/test_cli.py::test_version_option FAILED           [  4%]
+generated_tests/python/test_cli.py::test_list_installed_templates_success FAILED [  8%]
+generated_tests/python/test_cli.py::test_list_installed_templates_folder_not_exists FAILED [ 13%]
+generated_tests/python/test_cli.py::test_no_template_provided FAILED     [ 17%]
+generated_tests/python/test_cli.py::test_main_success PASSED             [ 21%]
+generated_tests/python/test_cli.py::test_main_exceptions[exception0] FAILED [ 26%]
+generated_tests/python/test_cli.py::test_main_exceptions[exception1] FAILED [ 30%]
+generated_tests/python/test_cli.py::test_main_exceptions[exception2] FAILED [ 34%]
+generated_tests/python/test_cli.py::test_main_exceptions[exception3] FAILED [ 39%]
+generated_tests/python/test_cli.py::test_main_exceptions[exception4] FAILED [ 43%]
+generated_tests/python/test_cli.py::test_main_exceptions[exception5] FAILED [ 47%]
+generated_tests/python/test_cli.py::test_main_exceptions[exception6] FAILED [ 52%]
+generated_tests/python/test_cli.py::test_main_exceptions[exception7] FAILED [ 56%]
+generated_tests/python/test_cli.py::test_main_exceptions[exception8] FAILED [ 60%]
+generated_tests/python/test_cli.py::test_undefined_variable_in_template FAILED [ 65%]
+generated_tests/python/test_cli.py::test_validate_extra_context_valid PASSED [ 69%]
+generated_tests/python/test_cli.py::test_validate_extra_context_invalid PASSED [ 73%]
+generated_tests/python/test_cli.py::test_overlapping_no_input_and_replay FAILED [ 78%]
+generated_tests/python/test_cli.py::test_replay_file PASSED              [ 82%]
+generated_tests/python/test_cli.py::test_accept_hooks_ask_yes PASSED     [ 86%]
+generated_tests/python/test_cli.py::test_accept_hooks_ask_no PASSED      [ 91%]
+generated_tests/python/test_cli.py::test_version_msg FAILED              [ 95%]
+generated_tests/python/test_cli.py::test_main_with_extra_context PASSED  [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_version_option ______________________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68f92a40>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837306381712'>
+mock_sys_version = '3.8.5'
+mock_os_path_abspath = <MagicMock name='abspath' id='139837306639632'>
+
+    def test_version_option(runner, mock_cookiecutter, mock_sys_version, mock_os_path_abspath):
+        result = runner.invoke(cli.main, ['--version'])
+        location = f"/abs/{os.path.dirname(os.path.dirname(__file__))}"
+        assert result.exit_code == 0
+>       assert f"Cookiecutter {cli.__version__} from {location} (Python {mock_sys_version})" in result.output
+E       AssertionError: assert 'Cookiecutter 2.6.0 from /abs//home/runner/work/cookiecutter/cookiecutter/generated_tests (Python 3.8.5)' in 'Cookiecutter 2.6.0 from /home/runner/work/cookiecutter/cookiecutter (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])\n'
+E        +  where 'Cookiecutter 2.6.0 from /home/runner/work/cookiecutter/cookiecutter (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])\n' = <Result okay>.output
+
+/home/runner/work/cookiecutter/cookiecutter/generated_tests/python/test_cli.py:107: AssertionError
+____________________ test_list_installed_templates_success _____________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68fd3340>
+mock_list_installed_templates = <MagicMock name='list_installed_templates' id='139837305284032'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837305275728'>
+mock_sys_exit = <MagicMock name='exit' id='139837305272736'>
+
+    def test_list_installed_templates_success(runner, mock_list_installed_templates, mock_get_user_config, mock_sys_exit):
+        result = runner.invoke(cli.main, ['--list-installed'])
+        mock_list_installed_templates.assert_called_once()
+>       mock_sys_exit.assert_called_once_with(0)
+
+generated_tests/python/test_cli.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837305272736'>, args = (0,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(0), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(0), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+------------------------------ Captured log call -------------------------------
+DEBUG    cookiecutter.config:config.py:134 User config not found. Loading default config.
+_______________ test_list_installed_templates_folder_not_exists ________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68e819c0>
+mock_list_installed_templates = <MagicMock name='list_installed_templates' id='139837305197888'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837305609552'>
+mock_sys_exit = <MagicMock name='exit' id='139837305603696'>
+mock_click_echo = <MagicMock name='echo' id='139837305316512'>
+mock_os_path_exists = <MagicMock name='exists' id='139837305309264'>
+
+    def test_list_installed_templates_folder_not_exists(runner, mock_list_installed_templates, mock_get_user_config, mock_sys_exit, mock_click_echo, mock_os_path_exists):
+        mock_os_path_exists.return_value = False
+        result = runner.invoke(cli.main, ['--list-installed'])
+        mock_click_echo.assert_called_once()
+>       mock_sys_exit.assert_called_once_with(-1)
+
+generated_tests/python/test_cli.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837305603696'>, args = (-1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(0), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(0), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+------------------------------ Captured log call -------------------------------
+DEBUG    cookiecutter.config:config.py:134 User config not found. Loading default config.
+__________________________ test_no_template_provided ___________________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68e8e590>
+mock_click_echo = <MagicMock name='echo' id='139837305309792'>
+mock_sys_exit = <MagicMock name='exit' id='139837304105344'>
+
+    def test_no_template_provided(runner, mock_click_echo, mock_sys_exit):
+        result = runner.invoke(cli.main, [])
+>       assert cli.main.params['template'].required
+E       TypeError: list indices must be integers or slices, not str
+
+generated_tests/python/test_cli.py:127: TypeError
+------------------------------ Captured log call -------------------------------
+DEBUG    cookiecutter.config:config.py:134 User config not found. Loading default config.
+_______________________ test_main_exceptions[exception0] _______________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68ed46a0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837305612960'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837305485440'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837305260544'>
+mock_click_echo = <MagicMock name='echo' id='139837305267312'>
+mock_sys_exit = <MagicMock name='exit' id='139837306647264'>
+exception = ContextDecodingException('Decoding failed')
+
+    @pytest.mark.parametrize("exception", [
+        ContextDecodingException("Decoding failed"),
+        OutputDirExistsException("Output dir exists"),
+        EmptyDirNameException("Empty dir name"),
+        InvalidModeException("Invalid mode"),
+        FailedHookException("Hook failed"),
+        UnknownExtension("Unknown extension"),
+        InvalidZipRepository("Invalid zip"),
+        RepositoryNotFound("Repo not found"),
+        RepositoryCloneFailed("Clone failed"),
+    ])
+    def test_main_exceptions(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit, exception):
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['dummy-template'])
+        mock_click_echo.assert_called_with(exception)
+>       mock_sys_exit.assert_called_once_with(1)
+
+generated_tests/python/test_cli.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837306647264'>, args = (1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(1), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(1), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+_______________________ test_main_exceptions[exception1] _______________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68eb5ae0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837305483328'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837305610272'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837305602832'>
+mock_click_echo = <MagicMock name='echo' id='139837305652128'>
+mock_sys_exit = <MagicMock name='exit' id='139837305312816'>
+exception = OutputDirExistsException('Output dir exists')
+
+    @pytest.mark.parametrize("exception", [
+        ContextDecodingException("Decoding failed"),
+        OutputDirExistsException("Output dir exists"),
+        EmptyDirNameException("Empty dir name"),
+        InvalidModeException("Invalid mode"),
+        FailedHookException("Hook failed"),
+        UnknownExtension("Unknown extension"),
+        InvalidZipRepository("Invalid zip"),
+        RepositoryNotFound("Repo not found"),
+        RepositoryCloneFailed("Clone failed"),
+    ])
+    def test_main_exceptions(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit, exception):
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['dummy-template'])
+        mock_click_echo.assert_called_with(exception)
+>       mock_sys_exit.assert_called_once_with(1)
+
+generated_tests/python/test_cli.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837305312816'>, args = (1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(1), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(1), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+_______________________ test_main_exceptions[exception2] _______________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68ed40d0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837305316272'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837304925504'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837304914320'>
+mock_click_echo = <MagicMock name='echo' id='139837305203360'>
+mock_sys_exit = <MagicMock name='exit' id='139837305278944'>
+exception = EmptyDirNameException('Empty dir name')
+
+    @pytest.mark.parametrize("exception", [
+        ContextDecodingException("Decoding failed"),
+        OutputDirExistsException("Output dir exists"),
+        EmptyDirNameException("Empty dir name"),
+        InvalidModeException("Invalid mode"),
+        FailedHookException("Hook failed"),
+        UnknownExtension("Unknown extension"),
+        InvalidZipRepository("Invalid zip"),
+        RepositoryNotFound("Repo not found"),
+        RepositoryCloneFailed("Clone failed"),
+    ])
+    def test_main_exceptions(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit, exception):
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['dummy-template'])
+        mock_click_echo.assert_called_with(exception)
+>       mock_sys_exit.assert_called_once_with(1)
+
+generated_tests/python/test_cli.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837305278944'>, args = (1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(1), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(1), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+_______________________ test_main_exceptions[exception3] _______________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68e85660>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837305280336'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837305074832'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837305065424'>
+mock_click_echo = <MagicMock name='echo' id='139837304794720'>
+mock_sys_exit = <MagicMock name='exit' id='139837304787952'>
+exception = InvalidModeException('Invalid mode')
+
+    @pytest.mark.parametrize("exception", [
+        ContextDecodingException("Decoding failed"),
+        OutputDirExistsException("Output dir exists"),
+        EmptyDirNameException("Empty dir name"),
+        InvalidModeException("Invalid mode"),
+        FailedHookException("Hook failed"),
+        UnknownExtension("Unknown extension"),
+        InvalidZipRepository("Invalid zip"),
+        RepositoryNotFound("Repo not found"),
+        RepositoryCloneFailed("Clone failed"),
+    ])
+    def test_main_exceptions(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit, exception):
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['dummy-template'])
+        mock_click_echo.assert_called_with(exception)
+>       mock_sys_exit.assert_called_once_with(1)
+
+generated_tests/python/test_cli.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837304787952'>, args = (1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(1), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(1), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+_______________________ test_main_exceptions[exception4] _______________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68e06a70>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837304795056'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837304101984'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837304109712'>
+mock_click_echo = <MagicMock name='echo' id='139837304152576'>
+mock_sys_exit = <MagicMock name='exit' id='139837304158480'>
+exception = FailedHookException('Hook failed')
+
+    @pytest.mark.parametrize("exception", [
+        ContextDecodingException("Decoding failed"),
+        OutputDirExistsException("Output dir exists"),
+        EmptyDirNameException("Empty dir name"),
+        InvalidModeException("Invalid mode"),
+        FailedHookException("Hook failed"),
+        UnknownExtension("Unknown extension"),
+        InvalidZipRepository("Invalid zip"),
+        RepositoryNotFound("Repo not found"),
+        RepositoryCloneFailed("Clone failed"),
+    ])
+    def test_main_exceptions(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit, exception):
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['dummy-template'])
+        mock_click_echo.assert_called_with(exception)
+>       mock_sys_exit.assert_called_once_with(1)
+
+generated_tests/python/test_cli.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837304158480'>, args = (1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(1), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(1), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+_______________________ test_main_exceptions[exception5] _______________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68e38160>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837304152624'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837304840176'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837304833504'>
+mock_click_echo = <MagicMock name='echo' id='139837305010256'>
+mock_sys_exit = <MagicMock name='exit' id='139837304999072'>
+exception = UnknownExtension('Unknown extension')
+
+    @pytest.mark.parametrize("exception", [
+        ContextDecodingException("Decoding failed"),
+        OutputDirExistsException("Output dir exists"),
+        EmptyDirNameException("Empty dir name"),
+        InvalidModeException("Invalid mode"),
+        FailedHookException("Hook failed"),
+        UnknownExtension("Unknown extension"),
+        InvalidZipRepository("Invalid zip"),
+        RepositoryNotFound("Repo not found"),
+        RepositoryCloneFailed("Clone failed"),
+    ])
+    def test_main_exceptions(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit, exception):
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['dummy-template'])
+        mock_click_echo.assert_called_with(exception)
+>       mock_sys_exit.assert_called_once_with(1)
+
+generated_tests/python/test_cli.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837304999072'>, args = (1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(1), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(1), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+_______________________ test_main_exceptions[exception6] _______________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68e3f130>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837305010304'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837304256448'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837304245552'>
+mock_click_echo = <MagicMock name='echo' id='139837304464688'>
+mock_sys_exit = <MagicMock name='exit' id='139837304461424'>
+exception = InvalidZipRepository('Invalid zip')
+
+    @pytest.mark.parametrize("exception", [
+        ContextDecodingException("Decoding failed"),
+        OutputDirExistsException("Output dir exists"),
+        EmptyDirNameException("Empty dir name"),
+        InvalidModeException("Invalid mode"),
+        FailedHookException("Hook failed"),
+        UnknownExtension("Unknown extension"),
+        InvalidZipRepository("Invalid zip"),
+        RepositoryNotFound("Repo not found"),
+        RepositoryCloneFailed("Clone failed"),
+    ])
+    def test_main_exceptions(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit, exception):
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['dummy-template'])
+        mock_click_echo.assert_called_with(exception)
+>       mock_sys_exit.assert_called_once_with(1)
+
+generated_tests/python/test_cli.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837304461424'>, args = (1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(1), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(1), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+_______________________ test_main_exceptions[exception7] _______________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68e5cbb0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837304464928'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837304188080'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837304186544'>
+mock_click_echo = <MagicMock name='echo' id='139837304317568'>
+mock_sys_exit = <MagicMock name='exit' id='139837304527920'>
+exception = RepositoryNotFound('Repo not found')
+
+    @pytest.mark.parametrize("exception", [
+        ContextDecodingException("Decoding failed"),
+        OutputDirExistsException("Output dir exists"),
+        EmptyDirNameException("Empty dir name"),
+        InvalidModeException("Invalid mode"),
+        FailedHookException("Hook failed"),
+        UnknownExtension("Unknown extension"),
+        InvalidZipRepository("Invalid zip"),
+        RepositoryNotFound("Repo not found"),
+        RepositoryCloneFailed("Clone failed"),
+    ])
+    def test_main_exceptions(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit, exception):
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['dummy-template'])
+        mock_click_echo.assert_called_with(exception)
+>       mock_sys_exit.assert_called_once_with(1)
+
+generated_tests/python/test_cli.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837304527920'>, args = (1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(1), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(1), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+_______________________ test_main_exceptions[exception8] _______________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68d7a830>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837304537040'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837304217728'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837304217824'>
+mock_click_echo = <MagicMock name='echo' id='139837304615888'>
+mock_sys_exit = <MagicMock name='exit' id='139837303588896'>
+exception = RepositoryCloneFailed('Clone failed')
+
+    @pytest.mark.parametrize("exception", [
+        ContextDecodingException("Decoding failed"),
+        OutputDirExistsException("Output dir exists"),
+        EmptyDirNameException("Empty dir name"),
+        InvalidModeException("Invalid mode"),
+        FailedHookException("Hook failed"),
+        UnknownExtension("Unknown extension"),
+        InvalidZipRepository("Invalid zip"),
+        RepositoryNotFound("Repo not found"),
+        RepositoryCloneFailed("Clone failed"),
+    ])
+    def test_main_exceptions(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit, exception):
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['dummy-template'])
+        mock_click_echo.assert_called_with(exception)
+>       mock_sys_exit.assert_called_once_with(1)
+
+generated_tests/python/test_cli.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837303588896'>, args = (1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(1), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(1), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+_____________________ test_undefined_variable_in_template ______________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68ce9870>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837303593168'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837303658992'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837303664080'>
+mock_click_echo = <MagicMock name='echo' id='139837304063024'>
+mock_sys_exit = <MagicMock name='exit' id='139837304070992'>
+
+    def test_undefined_variable_in_template(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit):
+        undefined_err = UndefinedVariableInTemplate("Undefined variable", MagicMock(message="Error message"), {"key": "value"})
+        mock_cookiecutter.side_effect = undefined_err
+        result = runner.invoke(cli.main, ['dummy-template'])
+        mock_click_echo.assert_any_call('Undefined variable')
+        mock_click_echo.assert_any_call('Error message: Error message')
+        mock_click_echo.assert_any_call('Context: {\n    "key": "value"\n}')
+>       mock_sys_exit.assert_called_once_with(1)
+
+generated_tests/python/test_cli.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='exit' id='139837304070992'>, args = (1,), kwargs = {}
+msg = "Expected 'exit' to be called once. Called 2 times.\nCalls: [call(1), call(0)]."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'exit' to be called once. Called 2 times.
+E           Calls: [call(1), call(0)].
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:940: AssertionError
+_____________________ test_overlapping_no_input_and_replay _____________________
+
+runner = <click.testing.CliRunner object at 0x7f2e68d7ebf0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139837304198704'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139837302335632'>
+mock_configure_logger = <MagicMock name='configure_logger' id='139837302244400'>
+mock_click_echo = <MagicMock name='echo' id='139837302256112'>
+mock_sys_exit = <MagicMock name='exit' id='139837302243584'>
+
+    def test_overlapping_no_input_and_replay(runner, mock_cookiecutter, mock_get_user_config, mock_configure_logger, mock_click_echo, mock_sys_exit):
+        result = runner.invoke(cli.main, ['dummy-template', '--no-input', '--replay'])
+>       assert "Usage:" in result.output
+E       AssertionError: assert 'Usage:' in ''
+E        +  where '' = <Result okay>.output
+
+generated_tests/python/test_cli.py:186: AssertionError
+_______________________________ test_version_msg _______________________________
+
+    def test_version_msg():
+        expected = f"Cookiecutter {cli.__version__} from /abs/cookiecutter/cli.py (Python {sys.version})"
+>       assert cli.version_msg() == expected
+E       AssertionError: assert 'Cookiecutter 2.6.0 from /home/runner/work/cookiecutter/cookiecutter (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])' == 'Cookiecutter 2.6.0 from /abs/cookiecutter/cli.py (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])'
+E         
+E         - Cookiecutter 2.6.0 from /abs/cookiecutter/cli.py (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])
+E         ?                          ^^^               ^ ^^^
+E         + Cookiecutter 2.6.0 from /home/runner/work/cookiecutter/cookiecutter (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])
+E         ?                          ^^^^^^^^^^^^^^^^               ^^^ ^^^^^^^
+
+generated_tests/python/test_cli.py:212: AssertionError
+
+---------- coverage: platform linux, python 3.10.15-final-0 ----------
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+cookiecutter/__init__.py          6      0   100%
+cookiecutter/cli.py              77     10    87%   104-127, 301
+cookiecutter/config.py           61     36    41%   38-39, 48-58, 63-86, 113, 117-118, 122-123, 132-133, 139-140
+cookiecutter/environment.py      23     14    39%   28-43, 51-56, 71
+cookiecutter/exceptions.py       26      1    96%   143
+cookiecutter/extensions.py       69     69     0%   3-174
+cookiecutter/find.py             16      8    50%   24-38
+cookiecutter/generate.py        202    175    13%   49-56, 66-123, 140-172, 202-260, 271-297, 316-322, 349-466
+cookiecutter/hooks.py            91     68    25%   42-48, 63-77, 86-105, 117-127, 138-144, 163-177, 186-201
+cookiecutter/log.py              22      5    77%   40-44
+cookiecutter/main.py             73     49    33%   73-77, 92-200, 205, 208-209, 212
+cookiecutter/prompt.py          188    149    21%   31-42, 53-58, 75-80, 88, 100-135, 146-158, 171, 181-189, 220-236, 241-247, 257-259, 275-278, 289-360, 373-400, 415-435
+cookiecutter/replay.py           25     17    32%   21-23, 28-37, 42-51
+cookiecutter/repository.py       42     26    38%   30, 35, 45, 50-53, 62-67, 103-139
+cookiecutter/utils.py            52     31    40%   30-31, 39, 47-52, 61-67, 75-76, 82-88, 93-98, 103-105
+cookiecutter/vcs.py              63     48    24%   41-51, 60, 80-139
+cookiecutter/zipfile.py          64     54    16%   38-118
+-----------------------------------------------------------
+TOTAL                          1100    760    31%
+
+=========================== short test summary info ============================
+FAILED generated_tests/python/test_cli.py::test_version_option - AssertionError: assert 'Cookiecutter 2.6.0 from /abs//home/runner/work/cookiecutter/cookiecutter/generated_tests (Python 3.8.5)' in 'Cookiecutter 2.6.0 from /home/runner/work/cookiecutter/cookiecutter (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])\n'
+ +  where 'Cookiecutter 2.6.0 from /home/runner/work/cookiecutter/cookiecutter (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])\n' = <Result okay>.output
+FAILED generated_tests/python/test_cli.py::test_list_installed_templates_success - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(0), call(0)].
+FAILED generated_tests/python/test_cli.py::test_list_installed_templates_folder_not_exists - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(0), call(0)].
+FAILED generated_tests/python/test_cli.py::test_no_template_provided - TypeError: list indices must be integers or slices, not str
+FAILED generated_tests/python/test_cli.py::test_main_exceptions[exception0] - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(1), call(0)].
+FAILED generated_tests/python/test_cli.py::test_main_exceptions[exception1] - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(1), call(0)].
+FAILED generated_tests/python/test_cli.py::test_main_exceptions[exception2] - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(1), call(0)].
+FAILED generated_tests/python/test_cli.py::test_main_exceptions[exception3] - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(1), call(0)].
+FAILED generated_tests/python/test_cli.py::test_main_exceptions[exception4] - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(1), call(0)].
+FAILED generated_tests/python/test_cli.py::test_main_exceptions[exception5] - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(1), call(0)].
+FAILED generated_tests/python/test_cli.py::test_main_exceptions[exception6] - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(1), call(0)].
+FAILED generated_tests/python/test_cli.py::test_main_exceptions[exception7] - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(1), call(0)].
+FAILED generated_tests/python/test_cli.py::test_main_exceptions[exception8] - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(1), call(0)].
+FAILED generated_tests/python/test_cli.py::test_undefined_variable_in_template - AssertionError: Expected 'exit' to be called once. Called 2 times.
+Calls: [call(1), call(0)].
+FAILED generated_tests/python/test_cli.py::test_overlapping_no_input_and_replay - AssertionError: assert 'Usage:' in ''
+ +  where '' = <Result okay>.output
+FAILED generated_tests/python/test_cli.py::test_version_msg - AssertionError: assert 'Cookiecutter 2.6.0 from /home/runner/work/cookiecutter/cookiecutter (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])' == 'Cookiecutter 2.6.0 from /abs/cookiecutter/cli.py (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])'
+  
+  - Cookiecutter 2.6.0 from /abs/cookiecutter/cli.py (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])
+  ?                          ^^^               ^ ^^^
+  + Cookiecutter 2.6.0 from /home/runner/work/cookiecutter/cookiecutter (Python 3.10.15 (main, Sep  9 2024, 03:02:45) [GCC 11.4.0])
+  ?                          ^^^^^^^^^^^^^^^^               ^^^ ^^^^^^^
+========================= 16 failed, 7 passed in 1.50s =========================
