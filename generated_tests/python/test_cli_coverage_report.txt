@@ -1,0 +1,712 @@
+No data to report.
+============================= test session starts ==============================
+platform linux -- Python 3.10.15, pytest-8.3.4, pluggy-1.5.0 -- /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/cookiecutter/cookiecutter
+configfile: pyproject.toml
+plugins: cov-6.0.0, anyio-4.7.0
+collecting ... collected 40 items
+
+generated_tests/python/test_cli.py::test_version_option PASSED           [  2%]
+generated_tests/python/test_cli.py::test_list_installed_templates_success FAILED [  5%]
+generated_tests/python/test_cli.py::test_list_installed_templates_no_dir FAILED [  7%]
+generated_tests/python/test_cli.py::test_main_success[tests/fake-repo-tmpl-args0] FAILED [ 10%]
+generated_tests/python/test_cli.py::test_main_success[https://github.com/user/repo.git-args1] FAILED [ 12%]
+generated_tests/python/test_cli.py::test_main_with_extra_context PASSED  [ 15%]
+generated_tests/python/test_cli.py::test_main_with_invalid_extra_context PASSED [ 17%]
+generated_tests/python/test_cli.py::test_main_conflicting_options PASSED [ 20%]
+generated_tests/python/test_cli.py::test_main_no_template FAILED         [ 22%]
+generated_tests/python/test_cli.py::test_main_help_argument FAILED       [ 25%]
+generated_tests/python/test_cli.py::test_main_handling_exceptions[exception0] FAILED [ 27%]
+generated_tests/python/test_cli.py::test_main_handling_exceptions[exception1] FAILED [ 30%]
+generated_tests/python/test_cli.py::test_main_handling_exceptions[exception2] FAILED [ 32%]
+generated_tests/python/test_cli.py::test_main_handling_exceptions[exception3] FAILED [ 35%]
+generated_tests/python/test_cli.py::test_main_handling_exceptions[exception4] FAILED [ 37%]
+generated_tests/python/test_cli.py::test_main_handling_exceptions[exception5] FAILED [ 40%]
+generated_tests/python/test_cli.py::test_main_handling_exceptions[exception6] FAILED [ 42%]
+generated_tests/python/test_cli.py::test_main_handling_exceptions[exception7] FAILED [ 45%]
+generated_tests/python/test_cli.py::test_main_handling_exceptions[exception8] FAILED [ 47%]
+generated_tests/python/test_cli.py::test_main_undefined_variable_exception FAILED [ 50%]
+generated_tests/python/test_cli.py::test_main_verbose_option PASSED      [ 52%]
+generated_tests/python/test_cli.py::test_main_replay_file_option PASSED  [ 55%]
+generated_tests/python/test_cli.py::test_main_overwrite_if_exists_option PASSED [ 57%]
+generated_tests/python/test_cli.py::test_main_skip_if_file_exists_option PASSED [ 60%]
+generated_tests/python/test_cli.py::test_main_output_dir_option PASSED   [ 62%]
+generated_tests/python/test_cli.py::test_main_config_file_option FAILED  [ 65%]
+generated_tests/python/test_cli.py::test_main_default_config_option FAILED [ 67%]
+generated_tests/python/test_cli.py::test_main_debug_file_option FAILED   [ 70%]
+generated_tests/python/test_cli.py::test_main_accept_hooks_option_yes PASSED [ 72%]
+generated_tests/python/test_cli.py::test_main_accept_hooks_option_no PASSED [ 75%]
+generated_tests/python/test_cli.py::test_main_accept_hooks_option_ask_yes PASSED [ 77%]
+generated_tests/python/test_cli.py::test_main_accept_hooks_option_ask_no PASSED [ 80%]
+generated_tests/python/test_cli.py::test_main_keep_project_on_failure_option FAILED [ 82%]
+generated_tests/python/test_cli.py::test_main_directory_option PASSED    [ 85%]
+generated_tests/python/test_cli.py::test_validate_extra_context_valid PASSED [ 87%]
+generated_tests/python/test_cli.py::test_validate_extra_context_invalid FAILED [ 90%]
+generated_tests/python/test_cli.py::test_version_msg PASSED              [ 92%]
+generated_tests/python/test_cli.py::test_main_help_option PASSED         [ 95%]
+generated_tests/python/test_cli.py::test_list_installed_empty_templates FAILED [ 97%]
+generated_tests/python/test_cli.py::test_main_unknown_accept_hooks_option FAILED [100%]
+
+=================================== FAILURES ===================================
+____________________ test_list_installed_templates_success _____________________
+
+runner = <click.testing.CliRunner object at 0x7f351ae8b100>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866061670624'>
+mock_listdir = <MagicMock name='listdir' id='139866061439328'>
+mock_isdir = <MagicMock name='isdir' id='139866061815872'>
+mock_os_exit = <MagicMock name='exit' id='139866061823840'>
+
+    def test_list_installed_templates_success(
+        runner, mock_get_user_config, mock_listdir, mock_isdir, mock_os_exit
+    ):
+        """Test listing installed templates when cookiecutters_dir exists."""
+        result = runner.invoke(cli.main, ['--list-installed'])
+>       assert result.exit_code == 0
+E       assert 1 == 0
+E        +  where 1 = <Result AttributeError("'NoneType' object has no attribute 'partition'")>.exit_code
+
+generated_tests/python/test_cli.py:89: AssertionError
+------------------------------ Captured log call -------------------------------
+DEBUG    cookiecutter.config:config.py:134 User config not found. Loading default config.
+_____________________ test_list_installed_templates_no_dir _____________________
+
+runner = <click.testing.CliRunner object at 0x7f351aee5ed0>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866061831712'>
+mock_isdir = <MagicMock name='isdir' id='139866060235696'>
+mock_os_exit = <MagicMock name='exit' id='139866060227392'>
+
+    def test_list_installed_templates_no_dir(
+        runner, mock_get_user_config, mock_isdir, mock_os_exit
+    ):
+        """Test listing installed templates when cookiecutters_dir does not exist."""
+        mock_isdir.return_value = False
+        result = runner.invoke(cli.main, ['--list-installed'])
+>       assert result.exit_code == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = <Result FileNotFoundError(2, 'No such file or directory')>.exit_code
+
+generated_tests/python/test_cli.py:102: AssertionError
+________________ test_main_success[tests/fake-repo-tmpl-args0] _________________
+
+runner = <click.testing.CliRunner object at 0x7f351aee5cc0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866061822640'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866061830368'>
+template = 'tests/fake-repo-tmpl', args = ['tests/fake-repo-tmpl', '--no-input']
+
+    @pytest.mark.parametrize(
+        "template,args",
+        [
+            ("tests/fake-repo-tmpl", ["tests/fake-repo-tmpl", "--no-input"]),
+            ("https://github.com/user/repo.git", ["https://github.com/user/repo.git"]),
+        ],
+    )
+    def test_main_success(runner, mock_cookiecutter, mock_get_user_config, template, args):
+        """Test main command executes successfully with valid template and options."""
+        result = runner.invoke(cli.main, args)
+        assert result.exit_code == 0
+        mock_cookiecutter.assert_called_once()
+        call_args = mock_cookiecutter.call_args[1]
+>       assert call_args['template'] == template
+E       KeyError: 'template'
+
+generated_tests/python/test_cli.py:120: KeyError
+__________ test_main_success[https://github.com/user/repo.git-args1] ___________
+
+runner = <click.testing.CliRunner object at 0x7f351ad3ef20>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866060090784'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866060080752'>
+template = 'https://github.com/user/repo.git'
+args = ['https://github.com/user/repo.git']
+
+    @pytest.mark.parametrize(
+        "template,args",
+        [
+            ("tests/fake-repo-tmpl", ["tests/fake-repo-tmpl", "--no-input"]),
+            ("https://github.com/user/repo.git", ["https://github.com/user/repo.git"]),
+        ],
+    )
+    def test_main_success(runner, mock_cookiecutter, mock_get_user_config, template, args):
+        """Test main command executes successfully with valid template and options."""
+        result = runner.invoke(cli.main, args)
+        assert result.exit_code == 0
+        mock_cookiecutter.assert_called_once()
+        call_args = mock_cookiecutter.call_args[1]
+>       assert call_args['template'] == template
+E       KeyError: 'template'
+
+generated_tests/python/test_cli.py:120: KeyError
+____________________________ test_main_no_template _____________________________
+
+runner = <click.testing.CliRunner object at 0x7f351aee5810>
+
+    def test_main_no_template(runner):
+        """Test main command without providing a template."""
+        result = runner.invoke(cli.main, [])
+>       assert result.exit_code != 0
+E       assert 0 != 0
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:152: AssertionError
+___________________________ test_main_help_argument ____________________________
+
+runner = <click.testing.CliRunner object at 0x7f351aeee470>
+
+    def test_main_help_argument(runner):
+        """Test main command with 'help' as template argument."""
+        result = runner.invoke(cli.main, ['help'])
+>       assert result.exit_code != 0
+E       assert 0 != 0
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:159: AssertionError
+__________________ test_main_handling_exceptions[exception0] ___________________
+
+runner = <click.testing.CliRunner object at 0x7f351aec1e70>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866061676864'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866061674176'>
+mock_os_exit = <MagicMock name='exit' id='139866061818416'>
+exception = ContextDecodingException('JSON Decode Error')
+
+    @pytest.mark.parametrize(
+        "exception",
+        [
+            ContextDecodingException("JSON Decode Error"),
+            OutputDirExistsException("Output directory exists"),
+            EmptyDirNameException("Empty directory name"),
+            InvalidModeException("Invalid mode"),
+            FailedHookException("Hook failed"),
+            UnknownExtension("Unknown extension"),
+            InvalidZipRepository("Invalid zip repository"),
+            RepositoryNotFound("Repository not found"),
+            RepositoryCloneFailed("Clone failed"),
+        ],
+    )
+    def test_main_handling_exceptions(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit, exception
+    ):
+        """Test main command handles various exceptions properly."""
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:183: AssertionError
+__________________ test_main_handling_exceptions[exception1] ___________________
+
+runner = <click.testing.CliRunner object at 0x7f351aec1f00>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866060258128'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866060400736'>
+mock_os_exit = <MagicMock name='exit' id='139866060391664'>
+exception = OutputDirExistsException('Output directory exists')
+
+    @pytest.mark.parametrize(
+        "exception",
+        [
+            ContextDecodingException("JSON Decode Error"),
+            OutputDirExistsException("Output directory exists"),
+            EmptyDirNameException("Empty directory name"),
+            InvalidModeException("Invalid mode"),
+            FailedHookException("Hook failed"),
+            UnknownExtension("Unknown extension"),
+            InvalidZipRepository("Invalid zip repository"),
+            RepositoryNotFound("Repository not found"),
+            RepositoryCloneFailed("Clone failed"),
+        ],
+    )
+    def test_main_handling_exceptions(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit, exception
+    ):
+        """Test main command handles various exceptions properly."""
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:183: AssertionError
+__________________ test_main_handling_exceptions[exception2] ___________________
+
+runner = <click.testing.CliRunner object at 0x7f351ad88430>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866059996992'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866059988880'>
+mock_os_exit = <MagicMock name='exit' id='139866060412464'>
+exception = EmptyDirNameException('Empty directory name')
+
+    @pytest.mark.parametrize(
+        "exception",
+        [
+            ContextDecodingException("JSON Decode Error"),
+            OutputDirExistsException("Output directory exists"),
+            EmptyDirNameException("Empty directory name"),
+            InvalidModeException("Invalid mode"),
+            FailedHookException("Hook failed"),
+            UnknownExtension("Unknown extension"),
+            InvalidZipRepository("Invalid zip repository"),
+            RepositoryNotFound("Repository not found"),
+            RepositoryCloneFailed("Clone failed"),
+        ],
+    )
+    def test_main_handling_exceptions(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit, exception
+    ):
+        """Test main command handles various exceptions properly."""
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:183: AssertionError
+__________________ test_main_handling_exceptions[exception3] ___________________
+
+runner = <click.testing.CliRunner object at 0x7f351ad88520>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866060209936'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866060199856'>
+mock_os_exit = <MagicMock name='exit' id='139866060226512'>
+exception = InvalidModeException('Invalid mode')
+
+    @pytest.mark.parametrize(
+        "exception",
+        [
+            ContextDecodingException("JSON Decode Error"),
+            OutputDirExistsException("Output directory exists"),
+            EmptyDirNameException("Empty directory name"),
+            InvalidModeException("Invalid mode"),
+            FailedHookException("Hook failed"),
+            UnknownExtension("Unknown extension"),
+            InvalidZipRepository("Invalid zip repository"),
+            RepositoryNotFound("Repository not found"),
+            RepositoryCloneFailed("Clone failed"),
+        ],
+    )
+    def test_main_handling_exceptions(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit, exception
+    ):
+        """Test main command handles various exceptions properly."""
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:183: AssertionError
+__________________ test_main_handling_exceptions[exception4] ___________________
+
+runner = <click.testing.CliRunner object at 0x7f351add3fa0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866060701264'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866060693056'>
+mock_os_exit = <MagicMock name='exit' id='139866060766224'>
+exception = FailedHookException('Hook failed')
+
+    @pytest.mark.parametrize(
+        "exception",
+        [
+            ContextDecodingException("JSON Decode Error"),
+            OutputDirExistsException("Output directory exists"),
+            EmptyDirNameException("Empty directory name"),
+            InvalidModeException("Invalid mode"),
+            FailedHookException("Hook failed"),
+            UnknownExtension("Unknown extension"),
+            InvalidZipRepository("Invalid zip repository"),
+            RepositoryNotFound("Repository not found"),
+            RepositoryCloneFailed("Clone failed"),
+        ],
+    )
+    def test_main_handling_exceptions(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit, exception
+    ):
+        """Test main command handles various exceptions properly."""
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:183: AssertionError
+__________________ test_main_handling_exceptions[exception5] ___________________
+
+runner = <click.testing.CliRunner object at 0x7f351ad74280>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866060316896'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866060321264'>
+mock_os_exit = <MagicMock name='exit' id='139866060782944'>
+exception = UnknownExtension('Unknown extension')
+
+    @pytest.mark.parametrize(
+        "exception",
+        [
+            ContextDecodingException("JSON Decode Error"),
+            OutputDirExistsException("Output directory exists"),
+            EmptyDirNameException("Empty directory name"),
+            InvalidModeException("Invalid mode"),
+            FailedHookException("Hook failed"),
+            UnknownExtension("Unknown extension"),
+            InvalidZipRepository("Invalid zip repository"),
+            RepositoryNotFound("Repository not found"),
+            RepositoryCloneFailed("Clone failed"),
+        ],
+    )
+    def test_main_handling_exceptions(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit, exception
+    ):
+        """Test main command handles various exceptions properly."""
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:183: AssertionError
+__________________ test_main_handling_exceptions[exception6] ___________________
+
+runner = <click.testing.CliRunner object at 0x7f351ad3eda0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866060095056'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866060084400'>
+mock_os_exit = <MagicMock name='exit' id='139866060566832'>
+exception = InvalidZipRepository('Invalid zip repository')
+
+    @pytest.mark.parametrize(
+        "exception",
+        [
+            ContextDecodingException("JSON Decode Error"),
+            OutputDirExistsException("Output directory exists"),
+            EmptyDirNameException("Empty directory name"),
+            InvalidModeException("Invalid mode"),
+            FailedHookException("Hook failed"),
+            UnknownExtension("Unknown extension"),
+            InvalidZipRepository("Invalid zip repository"),
+            RepositoryNotFound("Repository not found"),
+            RepositoryCloneFailed("Clone failed"),
+        ],
+    )
+    def test_main_handling_exceptions(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit, exception
+    ):
+        """Test main command handles various exceptions properly."""
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:183: AssertionError
+__________________ test_main_handling_exceptions[exception7] ___________________
+
+runner = <click.testing.CliRunner object at 0x7f351ad3c580>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866088546960'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866060244016'>
+mock_os_exit = <MagicMock name='exit' id='139866061863184'>
+exception = RepositoryNotFound('Repository not found')
+
+    @pytest.mark.parametrize(
+        "exception",
+        [
+            ContextDecodingException("JSON Decode Error"),
+            OutputDirExistsException("Output directory exists"),
+            EmptyDirNameException("Empty directory name"),
+            InvalidModeException("Invalid mode"),
+            FailedHookException("Hook failed"),
+            UnknownExtension("Unknown extension"),
+            InvalidZipRepository("Invalid zip repository"),
+            RepositoryNotFound("Repository not found"),
+            RepositoryCloneFailed("Clone failed"),
+        ],
+    )
+    def test_main_handling_exceptions(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit, exception
+    ):
+        """Test main command handles various exceptions properly."""
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:183: AssertionError
+__________________ test_main_handling_exceptions[exception8] ___________________
+
+runner = <click.testing.CliRunner object at 0x7f351ad3d120>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866060388000'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866060381328'>
+mock_os_exit = <MagicMock name='exit' id='139866060636112'>
+exception = RepositoryCloneFailed('Clone failed')
+
+    @pytest.mark.parametrize(
+        "exception",
+        [
+            ContextDecodingException("JSON Decode Error"),
+            OutputDirExistsException("Output directory exists"),
+            EmptyDirNameException("Empty directory name"),
+            InvalidModeException("Invalid mode"),
+            FailedHookException("Hook failed"),
+            UnknownExtension("Unknown extension"),
+            InvalidZipRepository("Invalid zip repository"),
+            RepositoryNotFound("Repository not found"),
+            RepositoryCloneFailed("Clone failed"),
+        ],
+    )
+    def test_main_handling_exceptions(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit, exception
+    ):
+        """Test main command handles various exceptions properly."""
+        mock_cookiecutter.side_effect = exception
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:183: AssertionError
+____________________ test_main_undefined_variable_exception ____________________
+
+runner = <click.testing.CliRunner object at 0x7f351aeef9a0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866060160832'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866060150800'>
+mock_os_exit = <MagicMock name='exit' id='139866060233488'>
+
+    def test_main_undefined_variable_exception(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit
+    ):
+        """Test main command handles UndefinedVariableInTemplate exception."""
+        undefined_error = UndefinedVariableInTemplate(
+            message="Undefined variable",
+            error=mock.Mock(message="Template error message"),
+            context={"key": "value"},
+        )
+        mock_cookiecutter.side_effect = undefined_error
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:199: AssertionError
+_________________________ test_main_config_file_option _________________________
+
+runner = <click.testing.CliRunner object at 0x7f351ac35b10>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866059005552'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866059007616'>
+
+    def test_main_config_file_option(
+        runner, mock_cookiecutter, mock_get_user_config
+    ):
+        """Test main command with --config-file option."""
+        config_file = '/path/to/config.yml'
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--config-file', config_file, '--no-input'])
+        assert result.exit_code == 0
+>       mock_get_user_config.assert_called_with(config_file=config_file, default_config=False)
+
+generated_tests/python/test_cli.py:269: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='get_user_config' id='139866059007616'>, args = ()
+kwargs = {'config_file': '/path/to/config.yml', 'default_config': False}
+expected = "get_user_config(config_file='/path/to/config.yml', default_config=False)"
+actual = 'not called.'
+error_message = "expected call not found.\nExpected: get_user_config(config_file='/path/to/config.yml', default_config=False)\nActual: not called."
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+>           raise AssertionError(error_message)
+E           AssertionError: expected call not found.
+E           Expected: get_user_config(config_file='/path/to/config.yml', default_config=False)
+E           Actual: not called.
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:920: AssertionError
+_______________________ test_main_default_config_option ________________________
+
+runner = <click.testing.CliRunner object at 0x7f351ae89b70>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866061449600'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866058781168'>
+
+    def test_main_default_config_option(
+        runner, mock_cookiecutter, mock_get_user_config
+    ):
+        """Test main command with --default-config option."""
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--default-config', '--no-input'])
+        assert result.exit_code == 0
+>       mock_get_user_config.assert_called_with(config_file=None, default_config=True)
+
+generated_tests/python/test_cli.py:279: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='get_user_config' id='139866058781168'>, args = ()
+kwargs = {'config_file': None, 'default_config': True}
+expected = 'get_user_config(config_file=None, default_config=True)'
+actual = 'not called.'
+error_message = 'expected call not found.\nExpected: get_user_config(config_file=None, default_config=True)\nActual: not called.'
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+>           raise AssertionError(error_message)
+E           AssertionError: expected call not found.
+E           Expected: get_user_config(config_file=None, default_config=True)
+E           Actual: not called.
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:920: AssertionError
+_________________________ test_main_debug_file_option __________________________
+
+runner = <click.testing.CliRunner object at 0x7f351adbf6d0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866060617520'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866059175872'>
+
+    def test_main_debug_file_option(
+        runner, mock_cookiecutter, mock_get_user_config
+    ):
+        """Test main command with --debug-file option."""
+        debug_file = '/path/to/debug.log'
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--debug-file', debug_file, '--no-input'])
+>       assert result.exit_code == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = <Result FileNotFoundError(2, 'No such file or directory')>.exit_code
+
+generated_tests/python/test_cli.py:289: AssertionError
+___________________ test_main_keep_project_on_failure_option ___________________
+
+runner = <click.testing.CliRunner object at 0x7f351ac45d50>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='139866059072432'>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866059511824'>
+mock_os_exit = <MagicMock name='exit' id='139866059519744'>
+
+    def test_main_keep_project_on_failure_option(
+        runner, mock_cookiecutter, mock_get_user_config, mock_os_exit
+    ):
+        """Test main command with --keep-project-on-failure option."""
+        mock_cookiecutter.side_effect = FailedHookException("Hook failed")
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--keep-project-on-failure', '--no-input'])
+>       assert result.exit_code == 1
+E       assert 0 == 1
+E        +  where 0 = <Result okay>.exit_code
+
+generated_tests/python/test_cli.py:349: AssertionError
+_____________________ test_validate_extra_context_invalid ______________________
+
+    def test_validate_extra_context_invalid():
+        """Test validate_extra_context with an invalid key=value pair."""
+        ctx = mock.Mock()
+        param = mock.Mock()
+        value = ['key1value1', 'key2=value2']
+>       with pytest.raises(click.BadParameter) as exc_info:
+E       NameError: name 'click' is not defined
+
+generated_tests/python/test_cli.py:380: NameError
+_____________________ test_list_installed_empty_templates ______________________
+
+runner = <click.testing.CliRunner object at 0x7f351acf4580>
+mock_get_user_config = <MagicMock name='get_user_config' id='139866059786464'>
+mock_listdir = <MagicMock name='listdir' id='139866059795920'>
+mock_isdir = <MagicMock name='isdir' id='139866060508512'>
+mock_os_exit = <MagicMock name='exit' id='139866059787472'>
+
+    def test_list_installed_empty_templates(
+        runner, mock_get_user_config, mock_listdir, mock_isdir, mock_os_exit
+    ):
+        """Test listing installed templates when no templates are present."""
+        mock_listdir.return_value = []
+        result = runner.invoke(cli.main, ['--list-installed'])
+>       assert result.exit_code == 0
+E       assert 1 == 0
+E        +  where 1 = <Result AttributeError("'NoneType' object has no attribute 'partition'")>.exit_code
+
+generated_tests/python/test_cli.py:406: AssertionError
+------------------------------ Captured log call -------------------------------
+DEBUG    cookiecutter.config:config.py:134 User config not found. Loading default config.
+____________________ test_main_unknown_accept_hooks_option _____________________
+
+runner = <click.testing.CliRunner object at 0x7f351acf49d0>
+
+    def test_main_unknown_accept_hooks_option(runner):
+        """Test main command with an unknown value for --accept-hooks."""
+        result = runner.invoke(cli.main, ['tests/fake-repo-tmpl', '--accept-hooks', 'maybe', '--no-input'])
+        assert result.exit_code != 0
+>       assert "invalid choice: maybe" in result.output
+E       assert 'invalid choice: maybe' in "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n"
+E        +  where "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n" = <Result SystemExit(2)>.output
+
+generated_tests/python/test_cli.py:415: AssertionError
+
+---------- coverage: platform linux, python 3.10.15-final-0 ----------
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+cookiecutter/__init__.py          6      0   100%
+cookiecutter/cli.py              77      2    97%   93, 267
+cookiecutter/config.py           61     36    41%   38-39, 48-58, 63-86, 113, 117-118, 122-123, 132-133, 139-140
+cookiecutter/environment.py      23     14    39%   28-43, 51-56, 71
+cookiecutter/exceptions.py       26      1    96%   143
+cookiecutter/extensions.py       69     69     0%   3-174
+cookiecutter/find.py             16      8    50%   24-38
+cookiecutter/generate.py        202    175    13%   49-56, 66-123, 140-172, 202-260, 271-297, 316-322, 349-466
+cookiecutter/hooks.py            91     68    25%   42-48, 63-77, 86-105, 117-127, 138-144, 163-177, 186-201
+cookiecutter/log.py              22      3    86%   42-44
+cookiecutter/main.py             73     47    36%   92-200, 205, 208-209, 212
+cookiecutter/prompt.py          188    149    21%   31-42, 53-58, 75-80, 88, 100-135, 146-158, 171, 181-189, 220-236, 241-247, 257-259, 275-278, 289-360, 373-400, 415-435
+cookiecutter/replay.py           25     17    32%   21-23, 28-37, 42-51
+cookiecutter/repository.py       42     26    38%   30, 35, 45, 50-53, 62-67, 103-139
+cookiecutter/utils.py            52     31    40%   30-31, 39, 47-52, 61-67, 75-76, 82-88, 93-98, 103-105
+cookiecutter/vcs.py              63     48    24%   41-51, 60, 80-139
+cookiecutter/zipfile.py          64     54    16%   38-118
+-----------------------------------------------------------
+TOTAL                          1100    748    32%
+
+=========================== short test summary info ============================
+FAILED generated_tests/python/test_cli.py::test_list_installed_templates_success - assert 1 == 0
+ +  where 1 = <Result AttributeError("'NoneType' object has no attribute 'partition'")>.exit_code
+FAILED generated_tests/python/test_cli.py::test_list_installed_templates_no_dir - AssertionError: assert 1 == 0
+ +  where 1 = <Result FileNotFoundError(2, 'No such file or directory')>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_success[tests/fake-repo-tmpl-args0] - KeyError: 'template'
+FAILED generated_tests/python/test_cli.py::test_main_success[https://github.com/user/repo.git-args1] - KeyError: 'template'
+FAILED generated_tests/python/test_cli.py::test_main_no_template - assert 0 != 0
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_help_argument - assert 0 != 0
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_handling_exceptions[exception0] - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_handling_exceptions[exception1] - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_handling_exceptions[exception2] - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_handling_exceptions[exception3] - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_handling_exceptions[exception4] - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_handling_exceptions[exception5] - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_handling_exceptions[exception6] - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_handling_exceptions[exception7] - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_handling_exceptions[exception8] - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_undefined_variable_exception - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_config_file_option - AssertionError: expected call not found.
+Expected: get_user_config(config_file='/path/to/config.yml', default_config=False)
+Actual: not called.
+FAILED generated_tests/python/test_cli.py::test_main_default_config_option - AssertionError: expected call not found.
+Expected: get_user_config(config_file=None, default_config=True)
+Actual: not called.
+FAILED generated_tests/python/test_cli.py::test_main_debug_file_option - AssertionError: assert 1 == 0
+ +  where 1 = <Result FileNotFoundError(2, 'No such file or directory')>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_keep_project_on_failure_option - assert 0 == 1
+ +  where 0 = <Result okay>.exit_code
+FAILED generated_tests/python/test_cli.py::test_validate_extra_context_invalid - NameError: name 'click' is not defined
+FAILED generated_tests/python/test_cli.py::test_list_installed_empty_templates - assert 1 == 0
+ +  where 1 = <Result AttributeError("'NoneType' object has no attribute 'partition'")>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_unknown_accept_hooks_option - assert 'invalid choice: maybe' in "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n"
+ +  where "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n" = <Result SystemExit(2)>.output
+======================== 23 failed, 17 passed in 1.01s =========================
