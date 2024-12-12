@@ -53,22 +53,6 @@ def validate_extra_context(
     for string in value:
         if '=' not in string:
             msg = (
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 f"EXTRA_CONTEXT should contain items of the form key=value; "
                 f"'{string}' doesn't match that form"
             )
@@ -77,6 +61,9 @@ def validate_extra_context(
     # Convert tuple -- e.g.: ('program_name=foobar', 'startsecs=66')
     # to dict -- e.g.: {'program_name': 'foobar', 'startsecs': '66'}
     return OrderedDict(s.split('=', 1) for s in value) or None
+
+
+
 
 
 def list_installed_templates(
