@@ -1,0 +1,619 @@
+No data to report.
+============================= test session starts ==============================
+platform linux -- Python 3.10.15, pytest-8.3.4, pluggy-1.5.0 -- /opt/hostedtoolcache/Python/3.10.15/x64/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/cookiecutter/cookiecutter
+configfile: pyproject.toml
+plugins: cov-6.0.0, anyio-4.7.0
+collecting ... collected 53 items
+
+generated_tests/python/test_cli.py::test_version_msg PASSED              [  1%]
+generated_tests/python/test_cli.py::test_validate_extra_context[extra_context0-expected0] FAILED [  3%]
+generated_tests/python/test_cli.py::test_validate_extra_context[extra_context1-expected1] FAILED [  5%]
+generated_tests/python/test_cli.py::test_validate_extra_context[extra_context2-None] FAILED [  7%]
+generated_tests/python/test_cli.py::test_validate_extra_context_invalid FAILED [  9%]
+generated_tests/python/test_cli.py::test_main_no_arguments PASSED        [ 11%]
+generated_tests/python/test_cli.py::test_main_help_argument FAILED       [ 13%]
+generated_tests/python/test_cli.py::test_main_list_installed FAILED      [ 15%]
+generated_tests/python/test_cli.py::test_main_list_installed_no_dir FAILED [ 16%]
+generated_tests/python/test_cli.py::test_main_with_template_success PASSED [ 18%]
+generated_tests/python/test_cli.py::test_main_with_extra_context PASSED  [ 20%]
+generated_tests/python/test_cli.py::test_main_invalid_extra_context PASSED [ 22%]
+generated_tests/python/test_cli.py::test_main_no_input_and_replay FAILED [ 24%]
+generated_tests/python/test_cli.py::test_main_cookiecutter_exceptions[exception0] PASSED [ 26%]
+generated_tests/python/test_cli.py::test_main_cookiecutter_exceptions[exception1] PASSED [ 28%]
+generated_tests/python/test_cli.py::test_main_cookiecutter_exceptions[exception2] PASSED [ 30%]
+generated_tests/python/test_cli.py::test_main_cookiecutter_exceptions[exception3] PASSED [ 32%]
+generated_tests/python/test_cli.py::test_main_cookiecutter_exceptions[exception4] PASSED [ 33%]
+generated_tests/python/test_cli.py::test_main_cookiecutter_exceptions[exception5] PASSED [ 35%]
+generated_tests/python/test_cli.py::test_main_cookiecutter_exceptions[exception6] PASSED [ 37%]
+generated_tests/python/test_cli.py::test_main_cookiecutter_exceptions[exception7] PASSED [ 39%]
+generated_tests/python/test_cli.py::test_main_cookiecutter_exceptions[exception8] PASSED [ 41%]
+generated_tests/python/test_cli.py::test_main_undefined_variable_exception PASSED [ 43%]
+generated_tests/python/test_cli.py::test_main_version_option PASSED      [ 45%]
+generated_tests/python/test_cli.py::test_main_list_installed_templates_call PASSED [ 47%]
+generated_tests/python/test_cli.py::test_main_accept_hooks_yes PASSED    [ 49%]
+generated_tests/python/test_cli.py::test_main_accept_hooks_ask_yes PASSED [ 50%]
+generated_tests/python/test_cli.py::test_main_accept_hooks_ask_no PASSED [ 52%]
+generated_tests/python/test_cli.py::test_main_overwrite_if_exists PASSED [ 54%]
+generated_tests/python/test_cli.py::test_main_skip_if_file_exists PASSED [ 56%]
+generated_tests/python/test_cli.py::test_main_with_debug_file PASSED     [ 58%]
+generated_tests/python/test_cli.py::test_main_with_replay_file PASSED    [ 60%]
+generated_tests/python/test_cli.py::test_main_with_directory_option PASSED [ 62%]
+generated_tests/python/test_cli.py::test_main_with_checkout_option PASSED [ 64%]
+generated_tests/python/test_cli.py::test_main_with_password_option PASSED [ 66%]
+generated_tests/python/test_cli.py::test_main_with_keep_project_on_failure PASSED [ 67%]
+generated_tests/python/test_cli.py::test_main_with_config_file PASSED    [ 69%]
+generated_tests/python/test_cli.py::test_main_with_default_config PASSED [ 71%]
+generated_tests/python/test_cli.py::test_main_unknown_accept_hooks_option FAILED [ 73%]
+generated_tests/python/test_cli.py::test_main_unknown_template PASSED    [ 75%]
+generated_tests/python/test_cli.py::test_main_with_verbose PASSED        [ 77%]
+generated_tests/python/test_cli.py::test_main_with_abbreviations FAILED  [ 79%]
+generated_tests/python/test_cli.py::test_main_with_nested_template FAILED [ 81%]
+generated_tests/python/test_cli.py::test_main_keep_project_on_failure PASSED [ 83%]
+generated_tests/python/test_cli.py::test_version_msg_content PASSED      [ 84%]
+generated_tests/python/test_cli.py::test_main_with_unknown_hook_option FAILED [ 86%]
+generated_tests/python/test_cli.py::test_main_with_nonexistent_config_file FAILED [ 88%]
+generated_tests/python/test_cli.py::test_main_with_invalid_yaml_config FAILED [ 90%]
+generated_tests/python/test_cli.py::test_main_with_replay_true PASSED    [ 92%]
+generated_tests/python/test_cli.py::test_main_with_multiple_exceptions PASSED [ 94%]
+generated_tests/python/test_cli.py::test_main_with_empty_extra_context PASSED [ 96%]
+generated_tests/python/test_cli.py::test_main_with_custom_output_dir PASSED [ 98%]
+generated_tests/python/test_cli.py::test_main_with_multiple_extra_contexts PASSED [100%]
+
+=================================== FAILURES ===================================
+____________ test_validate_extra_context[extra_context0-expected0] _____________
+
+extra_context = ['key=value'], expected = OrderedDict([('key', 'value')])
+
+    @pytest.mark.parametrize(
+        "extra_context,expected",
+        [
+            (['key=value'], OrderedDict({'key': 'value'})),
+            (['a=1', 'b=2'], OrderedDict({'a': '1', 'b': '2'})),
+            ([], None),
+        ],
+    )
+    def test_validate_extra_context(extra_context, expected):
+        """Test validate_extra_context with various inputs."""
+        from click import Context, BadParameter
+        from click.testing import CliRunner
+    
+        ctx = Context(main)
+        param = MagicMock()
+        if extra_context:
+>           result = main.validate_extra_context(ctx, param, extra_context)
+E           AttributeError: 'Command' object has no attribute 'validate_extra_context'
+
+generated_tests/python/test_cli.py:142: AttributeError
+____________ test_validate_extra_context[extra_context1-expected1] _____________
+
+extra_context = ['a=1', 'b=2'], expected = OrderedDict([('a', '1'), ('b', '2')])
+
+    @pytest.mark.parametrize(
+        "extra_context,expected",
+        [
+            (['key=value'], OrderedDict({'key': 'value'})),
+            (['a=1', 'b=2'], OrderedDict({'a': '1', 'b': '2'})),
+            ([], None),
+        ],
+    )
+    def test_validate_extra_context(extra_context, expected):
+        """Test validate_extra_context with various inputs."""
+        from click import Context, BadParameter
+        from click.testing import CliRunner
+    
+        ctx = Context(main)
+        param = MagicMock()
+        if extra_context:
+>           result = main.validate_extra_context(ctx, param, extra_context)
+E           AttributeError: 'Command' object has no attribute 'validate_extra_context'
+
+generated_tests/python/test_cli.py:142: AttributeError
+_______________ test_validate_extra_context[extra_context2-None] _______________
+
+extra_context = [], expected = None
+
+    @pytest.mark.parametrize(
+        "extra_context,expected",
+        [
+            (['key=value'], OrderedDict({'key': 'value'})),
+            (['a=1', 'b=2'], OrderedDict({'a': '1', 'b': '2'})),
+            ([], None),
+        ],
+    )
+    def test_validate_extra_context(extra_context, expected):
+        """Test validate_extra_context with various inputs."""
+        from click import Context, BadParameter
+        from click.testing import CliRunner
+    
+        ctx = Context(main)
+        param = MagicMock()
+        if extra_context:
+            result = main.validate_extra_context(ctx, param, extra_context)
+            assert result == expected
+        else:
+>           result = main.validate_extra_context(ctx, param, [])
+E           AttributeError: 'Command' object has no attribute 'validate_extra_context'
+
+generated_tests/python/test_cli.py:145: AttributeError
+_____________________ test_validate_extra_context_invalid ______________________
+
+    def test_validate_extra_context_invalid():
+        """Test validate_extra_context raises BadParameter for invalid input."""
+        from click import Context, BadParameter
+    
+        ctx = Context(main)
+        param = MagicMock()
+        with pytest.raises(BadParameter):
+>           main.validate_extra_context(ctx, param, ['invalid'])
+E           AttributeError: 'Command' object has no attribute 'validate_extra_context'
+
+generated_tests/python/test_cli.py:156: AttributeError
+___________________________ test_main_help_argument ____________________________
+
+runner = <click.testing.CliRunner object at 0x7fdbf0596800>
+mock_click_get_current_context = <MagicMock name='get_current_context' id='140582606946512'>
+mock_sys_exit = <MagicMock name='exit' id='140582606801984'>
+mock_click_echo = <MagicMock name='echo' id='140582606809040'>
+
+    def test_main_help_argument(runner, mock_click_get_current_context, mock_sys_exit, mock_click_echo):
+        """Test running main with 'help' argument shows help and exits."""
+        result = runner.invoke(main, ['help'])
+>       mock_click_echo.assert_called_with('Help Message')
+
+generated_tests/python/test_cli.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='echo' id='140582606809040'>, args = ('Help Message',)
+kwargs = {}, expected = call('Help Message')
+actual = call(RepositoryNotFound('A valid repository for "help" could not be found in the following locations:\nhelp\n/home/runner/.cookiecutters/help'))
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7fdbf0557f40>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: echo('Help Message')
+E           Actual: echo(RepositoryNotFound('A valid repository for "help" could not be found in the following locations:\nhelp\n/home/runner/.cookiecutters/help'))
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+------------------------------ Captured log call -------------------------------
+DEBUG    cookiecutter.config:config.py:134 User config not found. Loading default config.
+___________________________ test_main_list_installed ___________________________
+
+runner = <click.testing.CliRunner object at 0x7fdbf0594220>
+mock_list_installed_templates = <MagicMock name='list_installed_templates' id='140582606947040'>
+mock_get_user_config = <MagicMock name='get_user_config' id='140582606952752'>
+mock_os_path_exists = <MagicMock name='exists' id='140582606919696'>
+mock_os_listdir = <MagicMock name='listdir' id='140582606927472'>
+mock_sys_exit = <MagicMock name='exit' id='140582608376480'>
+
+    def test_main_list_installed(
+        runner,
+        mock_list_installed_templates,
+        mock_get_user_config,
+        mock_os_path_exists,
+        mock_os_listdir,
+        mock_sys_exit,
+    ):
+        """Test the --list-installed option when the directory exists."""
+        mock_os_path_exists.return_value = True
+        result = runner.invoke(main, ['--list-installed'])
+        mock_list_installed_templates.assert_called_once_with(False, None)
+        mock_sys_exit.assert_called_with(0)
+>       assert result.exit_code == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = <Result FileNotFoundError(2, 'No such file or directory')>.exit_code
+
+generated_tests/python/test_cli.py:186: AssertionError
+------------------------------ Captured log call -------------------------------
+DEBUG    cookiecutter.config:config.py:132 Loading config from /home/runner/.cookiecutterrc.
+DEBUG    cookiecutter.config:config.py:67 config_path is /home/runner/.cookiecutterrc
+_______________________ test_main_list_installed_no_dir ________________________
+
+runner = <click.testing.CliRunner object at 0x7fdbf058f640>
+mock_list_installed_templates = <MagicMock name='list_installed_templates' id='140582608375232'>
+mock_click_echo = <MagicMock name='echo' id='140582606832976'>
+mock_os_path_exists = <MagicMock name='exists' id='140582606935264'>
+mock_sys_exit = <MagicMock name='exit' id='140582606937616'>
+
+    def test_main_list_installed_no_dir(
+        runner,
+        mock_list_installed_templates,
+        mock_click_echo,
+        mock_os_path_exists,
+        mock_sys_exit,
+    ):
+        """Test the --list-installed option when the directory does not exist."""
+        mock_os_path_exists.return_value = False
+        result = runner.invoke(main, ['--list-installed'])
+>       mock_click_echo.assert_called_with(
+            "Error: Cannot list installed templates. Folder does not exist: /fake/cookiecutters/"
+        )
+
+generated_tests/python/test_cli.py:199: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='echo' id='140582606832976'>
+args = ('Error: Cannot list installed templates. Folder does not exist: /fake/cookiecutters/',)
+kwargs = {}
+expected = call('Error: Cannot list installed templates. Folder does not exist: /fake/cookiecutters/')
+actual = call('Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\n\n  Create a project from a Cookiecutter project template (TEMPLATE).\n\n  Cookiecutter is free and open source software, developed and managed by\n  volunteers. If you would like to help out or fund the project, please get in\n  touch at https://github.com/cookiecutter/cookiecutter.\n\nOptions:\n  -V, --version                Show the version and exit.\n  --no-input                   Do not prompt for parameters and only use\n                               cookiecutter.json file content. Defaults to\n                               deleting any cached resources and redownloading\n                               them. Cannot be combined with the --replay flag.\n  -c, --checkout TEXT          branch, tag or commit to checkout after git clone\n  --directory TEXT             Directory within repo that holds\n                               cookiecutter.json file for advanced repositories\n                               with multi templates in it\n  -v, --verbose                Print debug information\n  --replay                     Do not prompt for parameters and only use\n                               information entered previously. Cannot be\n                               combined with the --no-input flag or with extra\n                               configuration passed.\n  --replay-file PATH           Use this file for replay instead of the default.\n  -f, --overwrite-if-exists    Overwrite the contents of the output directory if\n                               it already exists\n  -s, --skip-if-file-exists    Skip the files in the corresponding directories\n                               if they already exist\n  -o, --output-dir PATH        Where to output the generated project dir into\n  --config-file PATH           User configuration file\n  --default-config             Do not load a config file. Use the defaults\n                               instead\n  --debug-file PATH            File to be used as a stream for DEBUG logging\n  --accept-hooks [yes|ask|no]  Accept pre/post hooks\n  -l, --list-installed         List currently installed templates.\n  --keep-project-on-failure    Do not delete project folder on failure\n  -h, --help                   Show this message and exit.')
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7fdbf0557a30>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: echo('Error: Cannot list installed templates. Folder does not exist: /fake/cookiecutters/')
+E           Actual: echo('Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\n\n  Create a project from a Cookiecutter project template (TEMPLATE).\n\n  Cookiecutter is free and open source software, developed and managed by\n  volunteers. If you would like to help out or fund the project, please get in\n  touch at https://github.com/cookiecutter/cookiecutter.\n\nOptions:\n  -V, --version                Show the version and exit.\n  --no-input                   Do not prompt for parameters and only use\n                               cookiecutter.json file content. Defaults to\n                               deleting any cached resources and redownloading\n                               them. Cannot be combined with the --replay flag.\n  -c, --checkout TEXT          branch, tag or commit to checkout after git clone\n  --directory TEXT             Directory within repo that holds\n                               cookiecutter.json file for advanced repositories\n                               with multi templates in it\n  -v, --verbose                Print debug information\n  --replay                     Do not prompt for parameters and only use\n                               information entered previously. Cannot be\n                               combined with the --no-input flag or with extra\n                               configuration passed.\n  --replay-file PATH           Use this file for replay instead of the default.\n  -f, --overwrite-if-exists    Overwrite the contents of the output directory if\n                               it already exists\n  -s, --skip-if-file-exists    Skip the files in the corresponding directories\n                               if they already exist\n  -o, --output-dir PATH        Where to output the generated project dir into\n  --config-file PATH           User configuration file\n  --default-config             Do not load a config file. Use the defaults\n                               instead\n  --debug-file PATH            File to be used as a stream for DEBUG logging\n  --accept-hooks [yes|ask|no]  Accept pre/post hooks\n  -l, --list-installed         List currently installed templates.\n  --keep-project-on-failure    Do not delete project folder on failure\n  -h, --help                   Show this message and exit.')
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+------------------------------ Captured log call -------------------------------
+DEBUG    cookiecutter.config:config.py:134 User config not found. Loading default config.
+________________________ test_main_no_input_and_replay _________________________
+
+runner = <click.testing.CliRunner object at 0x7fdbf05f6920>
+
+    def test_main_no_input_and_replay(
+        runner,
+    ):
+        """Test running main with both --no-input and --replay flags."""
+        result = runner.invoke(
+            main,
+            ['tests/fake-repo-tmpl', '--no-input', '--replay']
+        )
+        assert result.exit_code != 0
+>       assert "Cannot be combined with the --replay flag" in result.output
+E       AssertionError: assert 'Cannot be combined with the --replay flag' in 'You can not use both replay and no_input or extra_context at the same time.\n'
+E        +  where 'You can not use both replay and no_input or extra_context at the same time.\n' = <Result SystemExit(1)>.output
+
+generated_tests/python/test_cli.py:278: AssertionError
+____________________ test_main_unknown_accept_hooks_option _____________________
+
+runner = <click.testing.CliRunner object at 0x7fdbf04aa4a0>
+
+    def test_main_unknown_accept_hooks_option(
+        runner,
+    ):
+        """Test running main with an invalid --accept-hooks option."""
+        result = runner.invoke(
+            main,
+            ['tests/fake-repo-tmpl', '--accept-hooks', 'maybe']
+        )
+        assert result.exit_code != 0
+>       assert "invalid choice: maybe. (choose from yes, ask, no)" in result.output
+E       assert 'invalid choice: maybe. (choose from yes, ask, no)' in "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n"
+E        +  where "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n" = <Result SystemExit(2)>.output
+
+generated_tests/python/test_cli.py:738: AssertionError
+_________________________ test_main_with_abbreviations _________________________
+
+runner = <click.testing.CliRunner object at 0x7fdbf04f08e0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='140582606285040'>
+mock_get_user_config = <MagicMock name='get_user_config' id='140582606317568'>
+mock_configure_logger = <MagicMock name='configure_logger' id='140582605849216'>
+
+    def test_main_with_abbreviations(
+        runner,
+        mock_cookiecutter,
+        mock_get_user_config,
+        mock_configure_logger,
+    ):
+        """Test running main with template abbreviations."""
+        mock_get_user_config.return_value['abbreviations'] = {'gh': 'https://github.com/{0}.git'}
+        mock_cookiecutter.return_value = '/fake/output/project'
+        result = runner.invoke(
+            main,
+            ['gh:user/repo']
+        )
+>       mock_cookiecutter.assert_called_once_with(
+            'https://github.com/user/repo.git',
+            None,
+            False,
+            extra_context=None,
+            replay=False,
+            overwrite_if_exists=False,
+            output_dir='.',
+            config_file=None,
+            default_config=False,
+            password=None,
+            directory=None,
+            skip_if_file_exists=False,
+            accept_hooks=True,
+            keep_project_on_failure=False,
+        )
+
+generated_tests/python/test_cli.py:786: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:941: in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='cookiecutter' id='140582606285040'>
+args = ('https://github.com/user/repo.git', None, False)
+kwargs = {'accept_hooks': True, 'config_file': None, 'default_config': False, 'directory': None, ...}
+expected = call('https://github.com/user/repo.git', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+actual = call('gh:user/repo', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7fdbf059fb50>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\nActual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: cookiecutter('https://github.com/user/repo.git', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+E           Actual: cookiecutter('gh:user/repo', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:929: AssertionError
+________________________ test_main_with_nested_template ________________________
+
+runner = <click.testing.CliRunner object at 0x7fdbf04c4b20>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='140582606097088'>
+mock_get_user_config = <MagicMock name='get_user_config' id='140582606106112'>
+mock_configure_logger = <MagicMock name='configure_logger' id='140582606309168'>
+mock_click_confirm = <MagicMock name='confirm' id='140582606267024'>
+mock_os_path_exists = <MagicMock name='exists' id='140582604601952'>
+mock_os_listdir = <MagicMock name='listdir' id='140582604588224'>
+
+    def test_main_with_nested_template(
+        runner,
+        mock_cookiecutter,
+        mock_get_user_config,
+        mock_configure_logger,
+        mock_click_confirm,
+        mock_os_path_exists,
+        mock_os_listdir,
+    ):
+        """Test running main with a nested template selection."""
+        # Mock the repository to have nested templates
+>       with patch('cookiecutter.cli.generate_context') as mock_generate_context:
+
+generated_tests/python/test_cli.py:816: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1447: in __enter__
+    original, local = self.get_original()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7fdbf04c4bb0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'cookiecutter.cli' from '/home/runner/work/cookiecutter/cookiecutter/cookiecutter/cli.py'> does not have the attribute 'generate_context'
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1420: AttributeError
+______________________ test_main_with_unknown_hook_option ______________________
+
+runner = <click.testing.CliRunner object at 0x7fdbf04b2ad0>
+mock_cookiecutter = <MagicMock name='cookiecutter' id='140582606022944'>
+mock_get_user_config = <MagicMock name='get_user_config' id='140582606267984'>
+
+    def test_main_with_unknown_hook_option(
+        runner,
+        mock_cookiecutter,
+        mock_get_user_config,
+    ):
+        """Test running main with an unknown hook acceptance option."""
+        result = runner.invoke(
+            main,
+            ['tests/fake-repo-tmpl', '--accept-hooks', 'maybe']
+        )
+        assert result.exit_code != 0
+>       assert "invalid choice: maybe. (choose from yes, ask, no)" in result.output
+E       assert 'invalid choice: maybe. (choose from yes, ask, no)' in "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n"
+E        +  where "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n" = <Result SystemExit(2)>.output
+
+generated_tests/python/test_cli.py:865: AssertionError
+____________________ test_main_with_nonexistent_config_file ____________________
+
+runner = <click.testing.CliRunner object at 0x7fdbf06168f0>
+mock_get_user_config = <MagicMock name='get_user_config' id='140582607486640'>
+
+    def test_main_with_nonexistent_config_file(
+        runner,
+        mock_get_user_config,
+    ):
+        """Test running main with a non-existent config file."""
+        from cookiecutter.exceptions import ConfigDoesNotExistException
+>       with patch('cookiecutter.cli.get_config', side_effect=ConfigDoesNotExistException("Config not found")):
+
+generated_tests/python/test_cli.py:874: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1447: in __enter__
+    original, local = self.get_original()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7fdbf06158a0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'cookiecutter.cli' from '/home/runner/work/cookiecutter/cookiecutter/cookiecutter/cli.py'> does not have the attribute 'get_config'
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1420: AttributeError
+______________________ test_main_with_invalid_yaml_config ______________________
+
+runner = <click.testing.CliRunner object at 0x7fdbf0544040>
+mock_get_user_config = <MagicMock name='get_user_config' id='140582606619888'>
+
+    def test_main_with_invalid_yaml_config(
+        runner,
+        mock_get_user_config,
+    ):
+        """Test running main with an invalid YAML config file."""
+        from cookiecutter.exceptions import InvalidConfiguration
+>       with patch('cookiecutter.cli.get_config', side_effect=InvalidConfiguration("Invalid YAML")):
+
+generated_tests/python/test_cli.py:889: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1447: in __enter__
+    original, local = self.get_original()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7fdbf0547af0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'cookiecutter.cli' from '/home/runner/work/cookiecutter/cookiecutter/cookiecutter/cli.py'> does not have the attribute 'get_config'
+
+/opt/hostedtoolcache/Python/3.10.15/x64/lib/python3.10/unittest/mock.py:1420: AttributeError
+
+---------- coverage: platform linux, python 3.10.15-final-0 ----------
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+cookiecutter/__init__.py          6      0   100%
+cookiecutter/cli.py              77     10    87%   100-118, 292
+cookiecutter/config.py           61     31    49%   38-39, 48-58, 64-65, 69-86, 113, 117-118, 122-123, 139-140
+cookiecutter/environment.py      23     14    39%   28-43, 51-56, 71
+cookiecutter/exceptions.py       26      1    96%   143
+cookiecutter/extensions.py       69     69     0%   3-174
+cookiecutter/find.py             16      8    50%   24-38
+cookiecutter/generate.py        202    175    13%   49-56, 66-123, 140-172, 202-260, 271-297, 316-322, 349-466
+cookiecutter/hooks.py            91     68    25%   42-48, 63-77, 86-105, 117-127, 138-144, 163-177, 186-201
+cookiecutter/log.py              22      5    77%   40-44
+cookiecutter/main.py             73     47    36%   92-200, 205, 208-209, 212
+cookiecutter/prompt.py          188    149    21%   31-42, 53-58, 75-80, 88, 100-135, 146-158, 171, 181-189, 220-236, 241-247, 257-259, 275-278, 289-360, 373-400, 415-435
+cookiecutter/replay.py           25     17    32%   21-23, 28-37, 42-51
+cookiecutter/repository.py       42     10    76%   45, 51, 104-112, 114-121, 127, 133
+cookiecutter/utils.py            52     31    40%   30-31, 39, 47-52, 61-67, 75-76, 82-88, 93-98, 103-105
+cookiecutter/vcs.py              63     48    24%   41-51, 60, 80-139
+cookiecutter/zipfile.py          64     54    16%   38-118
+-----------------------------------------------------------
+TOTAL                          1100    737    33%
+
+=========================== short test summary info ============================
+FAILED generated_tests/python/test_cli.py::test_validate_extra_context[extra_context0-expected0] - AttributeError: 'Command' object has no attribute 'validate_extra_context'
+FAILED generated_tests/python/test_cli.py::test_validate_extra_context[extra_context1-expected1] - AttributeError: 'Command' object has no attribute 'validate_extra_context'
+FAILED generated_tests/python/test_cli.py::test_validate_extra_context[extra_context2-None] - AttributeError: 'Command' object has no attribute 'validate_extra_context'
+FAILED generated_tests/python/test_cli.py::test_validate_extra_context_invalid - AttributeError: 'Command' object has no attribute 'validate_extra_context'
+FAILED generated_tests/python/test_cli.py::test_main_help_argument - AssertionError: expected call not found.
+Expected: echo('Help Message')
+Actual: echo(RepositoryNotFound('A valid repository for "help" could not be found in the following locations:\nhelp\n/home/runner/.cookiecutters/help'))
+FAILED generated_tests/python/test_cli.py::test_main_list_installed - AssertionError: assert 1 == 0
+ +  where 1 = <Result FileNotFoundError(2, 'No such file or directory')>.exit_code
+FAILED generated_tests/python/test_cli.py::test_main_list_installed_no_dir - AssertionError: expected call not found.
+Expected: echo('Error: Cannot list installed templates. Folder does not exist: /fake/cookiecutters/')
+Actual: echo('Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\n\n  Create a project from a Cookiecutter project template (TEMPLATE).\n\n  Cookiecutter is free and open source software, developed and managed by\n  volunteers. If you would like to help out or fund the project, please get in\n  touch at https://github.com/cookiecutter/cookiecutter.\n\nOptions:\n  -V, --version                Show the version and exit.\n  --no-input                   Do not prompt for parameters and only use\n                               cookiecutter.json file content. Defaults to\n                               deleting any cached resources and redownloading\n                               them. Cannot be combined with the --replay flag.\n  -c, --checkout TEXT          branch, tag or commit to checkout after git clone\n  --directory TEXT             Directory within repo that holds\n                               cookiecutter.json file for advanced repositories\n                               with multi templates in it\n  -v, --verbose                Print debug information\n  --replay                     Do not prompt for parameters and only use\n                               information entered previously. Cannot be\n                               combined with the --no-input flag or with extra\n                               configuration passed.\n  --replay-file PATH           Use this file for replay instead of the default.\n  -f, --overwrite-if-exists    Overwrite the contents of the output directory if\n                               it already exists\n  -s, --skip-if-file-exists    Skip the files in the corresponding directories\n                               if they already exist\n  -o, --output-dir PATH        Where to output the generated project dir into\n  --config-file PATH           User configuration file\n  --default-config             Do not load a config file. Use the defaults\n                               instead\n  --debug-file PATH            File to be used as a stream for DEBUG logging\n  --accept-hooks [yes|ask|no]  Accept pre/post hooks\n  -l, --list-installed         List currently installed templates.\n  --keep-project-on-failure    Do not delete project folder on failure\n  -h, --help                   Show this message and exit.')
+FAILED generated_tests/python/test_cli.py::test_main_no_input_and_replay - AssertionError: assert 'Cannot be combined with the --replay flag' in 'You can not use both replay and no_input or extra_context at the same time.\n'
+ +  where 'You can not use both replay and no_input or extra_context at the same time.\n' = <Result SystemExit(1)>.output
+FAILED generated_tests/python/test_cli.py::test_main_unknown_accept_hooks_option - assert 'invalid choice: maybe. (choose from yes, ask, no)' in "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n"
+ +  where "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n" = <Result SystemExit(2)>.output
+FAILED generated_tests/python/test_cli.py::test_main_with_abbreviations - AssertionError: expected call not found.
+Expected: cookiecutter('https://github.com/user/repo.git', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+Actual: cookiecutter('gh:user/repo', None, False, extra_context=None, replay=False, overwrite_if_exists=False, output_dir='.', config_file=None, default_config=False, password=None, directory=None, skip_if_file_exists=False, accept_hooks=True, keep_project_on_failure=False)
+FAILED generated_tests/python/test_cli.py::test_main_with_nested_template - AttributeError: <module 'cookiecutter.cli' from '/home/runner/work/cookiecutter/cookiecutter/cookiecutter/cli.py'> does not have the attribute 'generate_context'
+FAILED generated_tests/python/test_cli.py::test_main_with_unknown_hook_option - assert 'invalid choice: maybe. (choose from yes, ask, no)' in "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n"
+ +  where "Usage: main [OPTIONS] [TEMPLATE] [EXTRA_CONTEXT]...\nTry 'main -h' for help.\n\nError: Invalid value for '--accept-hooks': 'maybe' is not one of 'yes', 'ask', 'no'.\n" = <Result SystemExit(2)>.output
+FAILED generated_tests/python/test_cli.py::test_main_with_nonexistent_config_file - AttributeError: <module 'cookiecutter.cli' from '/home/runner/work/cookiecutter/cookiecutter/cookiecutter/cli.py'> does not have the attribute 'get_config'
+FAILED generated_tests/python/test_cli.py::test_main_with_invalid_yaml_config - AttributeError: <module 'cookiecutter.cli' from '/home/runner/work/cookiecutter/cookiecutter/cookiecutter/cli.py'> does not have the attribute 'get_config'
+======================== 14 failed, 39 passed in 1.45s =========================
